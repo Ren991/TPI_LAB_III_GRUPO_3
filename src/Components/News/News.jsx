@@ -24,7 +24,7 @@ function News() {
     return (
         <div style={{display:"flex", justifyContent:"space-around",flexWrap:"wrap"}}>
             {movies.map((movie, index) => (
-                <Card key={index} style={{ width: '18rem' }}>
+                <Card key={index} style={{ width: '18rem', marginTop:"12px" }}>
                     <Card.Img variant="top" src={movie.imageUrl} />
                     <Card.Body>
                         <Card.Title>{movie.title}</Card.Title>
