@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 function SignIn() {
     return (
-        <div style={{width:"80%", marginLeft:"auto", marginRight:"auto", marginTop: "25px"}}>
+        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px" }}>
             <h3>Iniciar sesión:</h3>
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -22,6 +22,10 @@ function SignIn() {
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
+                <div style={{display: "flex", justifyContent: "space-between", marginTop: "10px"}}>
+                    <h4>No tienes cuenta?</h4>
+                    <Button>Crear Cuenta</Button>
+                </div>
             </Form>
         </div>
     );
