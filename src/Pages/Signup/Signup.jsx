@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 function SignUp() {
     return (
-        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "50px", backgroundColor: "#818fdb" , paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
         WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
         MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)' }}>
             
@@ -31,7 +31,7 @@ function SignUp() {
                     <Form.Label> Repeat Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit">º
                     Crear cuenta
                 </Button>
                 <div style={{display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
