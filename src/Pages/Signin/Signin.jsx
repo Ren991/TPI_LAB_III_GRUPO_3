@@ -4,9 +4,12 @@ import Form from 'react-bootstrap/Form';
 
 function SignIn() {
     return (
-        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px" }}>
-            <h3>Iniciar sesión:</h3>
-            <Form>
+        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+        WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+        MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)' }}>
+            
+            <Form style={{width: "60%", marginLeft: "auto", marginRight: "auto"}}>
+                <h3>Iniciar sesión:</h3>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" />
@@ -22,7 +25,7 @@ function SignIn() {
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
-                <div style={{display: "flex", justifyContent: "space-between", marginTop: "10px"}}>
+                <div style={{display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
                     <h4>No tienes cuenta?</h4>
                     <Button>Crear Cuenta</Button>
                 </div>
