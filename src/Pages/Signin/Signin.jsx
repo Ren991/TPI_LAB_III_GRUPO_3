@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 function SignIn() {
     return (
-        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
         WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
         MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)' }}>
             
