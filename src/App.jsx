@@ -1,4 +1,5 @@
 import Home from "./Pages/Home/Home"
+import SignIn from "./Pages/Signin/Signin";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -6,8 +7,10 @@ function App() {
 
   return (
     <>
-      <Home/>
-    </>
+{/*       <Home/>
+ */}  
+    <SignIn/>
+  </>
   )
 }
 
