@@ -1,5 +1,6 @@
 import Home from "./Pages/Home/Home"
 import SignIn from "./Pages/Signin/Signin";
+import MoviePlayer from "./Pages/MoviePlayer/MoviePlayer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./Pages/Signup/Signup";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -26,6 +27,12 @@ function App() {
       element: (
         <SignUp />
       ),
+    },
+    {
+      path: "/MoviePlayer",
+      element:(
+        <MoviePlayer/>
+      )
     }
 
   ]);
