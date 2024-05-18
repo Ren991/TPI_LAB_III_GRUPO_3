@@ -16,7 +16,7 @@ function App() {
       ),
     },
     {
-      path: "/SignIn",
+      path: "/signIn",
       element: (
 
         <SignIn />
@@ -24,19 +24,19 @@ function App() {
       ),
     },
     {
-      path: "/SignUp",
+      path: "/signUp",
       element: (
         <SignUp />
       ),
     },
     {
-      path: "/MoviePlayer",
+      path: "/moviePlayer",
       element:(
         <MoviePlayer/>
       )
     },
     {
-      path: "/Favorites",
+      path: "/favorites",
       element:(
         <Favorites/>
       )
