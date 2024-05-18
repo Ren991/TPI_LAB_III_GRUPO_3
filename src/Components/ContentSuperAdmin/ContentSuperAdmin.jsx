@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import BoardMovieSerie from '../BoardMovieSerie/BoardMovieSerie';
 
 const ContentSuperAdmin = () => {
 
@@ -74,11 +75,19 @@ const ContentSuperAdmin = () => {
         });
     };
 
+
+
     return (
-        <div style={{width: '70%', marginLeft: 'auto', marginRight: 'auto', marginTop: '20px', display: 'flex', justifyContent: 'space-around'}}>
-            <Button onClick={AddMovie}>Agregar Película / Serie</Button>
-            <Button onClick={AddAdmin}>Agregar Admin</Button>
-            <Button onClick={RemoveAdmin}>Eliminar Admin</Button>
+        <div style={{width: '70%', marginLeft: 'auto', marginRight: 'auto', marginTop: '20px'}}>
+            
+            <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                <Button onClick={AddMovie}>Agregar Película / Serie</Button>
+                <Button onClick={AddAdmin}>Agregar Admin</Button>
+                <Button onClick={RemoveAdmin}>Eliminar Admin</Button>
+            </div>
+            <div>
+                <BoardMovieSerie/>
+            </div>
         </div>
     );
 }
