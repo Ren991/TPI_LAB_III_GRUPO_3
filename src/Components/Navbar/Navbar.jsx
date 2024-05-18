@@ -26,7 +26,7 @@ function NavBarPage() {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#home" className="me-auto">
-          ArgFlix
+          <Link to='/home' style={{textDecoration: 'None', color: 'black'}}>ArgFlix</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         {homeRoute === true && (
