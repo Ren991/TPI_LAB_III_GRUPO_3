@@ -1,9 +1,10 @@
 import React from 'react'
+import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
 const ContentSuperAdmin = () => {
 
-    const mostrarDialogo = () => {
+    const AddMovie = () => {
         Swal.fire({
             title: 'Ingrese datos a cargar:',
             html:
@@ -26,14 +27,58 @@ const ContentSuperAdmin = () => {
                 const input6 = document.getElementById('input6').value;
 
                 // Aquí puedes hacer algo con los valores ingresados, por ejemplo, enviarlos a una función de manejo
-                console.log('Valores ingresados:', input1, input2, input3, input4);
+                console.log('Valores ingresados:', input1, input2, input3, input4, input5, input6);
+            }
+        });
+    };
+
+    const AddAdmin = () => {
+        Swal.fire({
+            title: 'Ingrese admin nuevo:',
+            html:
+                '<input id="input1" class="swal2-input" placeholder="Nombre">' +
+                '<input id="input2" class="swal2-input" placeholder="Contraseña">',
+              
+            showCancelButton: true,
+            confirmButtonText: 'Agregar',
+            cancelButtonText: 'Cancelar',
+            preConfirm: () => {
+                // Obtener los valores de los inputs
+                const input1 = document.getElementById('input1').value;
+                const input2 = document.getElementById('input2').value;
+
+
+                // Aquí puedes hacer algo con los valores ingresados, por ejemplo, enviarlos a una función de manejo
+                console.log('Valores ingresados:', input1, input2);
+            }
+        });
+    };
+
+    const RemoveAdmin = () => {
+        Swal.fire({
+            title: 'Ingrese nombre:',
+            html:
+                '<input id="input1" class="swal2-input" placeholder="Admin a eliminar">',
+              
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar',
+            preConfirm: () => {
+                // Obtener los valores de los inputs
+                const input1 = document.getElementById('input1').value;
+
+
+                // Aquí puedes hacer algo con los valores ingresados, por ejemplo, enviarlos a una función de manejo
+                console.log('Valores ingresados:', input1);
             }
         });
     };
 
     return (
-        <div>
-            <button onClick={mostrarDialogo}>Mostrar cuadro de diálogo</button>
+        <div style={{width: '70%', marginLeft: 'auto', marginRight: 'auto', marginTop: '20px', display: 'flex', justifyContent: 'space-around'}}>
+            <Button onClick={AddMovie}>Agregar Película / Serie</Button>
+            <Button onClick={AddAdmin}>Agregar Admin</Button>
+            <Button onClick={RemoveAdmin}>Eliminar Admin</Button>
         </div>
     );
 }

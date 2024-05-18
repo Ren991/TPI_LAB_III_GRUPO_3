@@ -6,7 +6,7 @@ import ContentSuperAdmin from '../../Components/ContentSuperAdmin/ContentSuperAd
 
 const SuperAdmin = () => {
   return (
-    <div>
+    <div style={{width: '100%'}}>
         <NavBarPage/>
         <ContentSuperAdmin/>
         <Footer/>
