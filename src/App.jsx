@@ -6,6 +6,7 @@ import SignUp from "./Pages/Signup/Signup";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
+import Admin from "./Pages/Admin/Admin";
 
 
 function App() {
@@ -46,6 +47,12 @@ function App() {
       path: "/superadmin",
       element:(
         <SuperAdmin/>
+      )
+    },
+    {
+      path: "/admin",
+      element:(
+        <Admin/>
       )
     }
 
