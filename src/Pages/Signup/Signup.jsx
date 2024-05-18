@@ -15,7 +15,7 @@ function SignUp() {
                     <Form.Control type="text" placeholder="Usuario" />
                     
                 </Form.Group>
-
+                
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" />
@@ -39,6 +39,7 @@ function SignUp() {
                     <Button>Iniciar Sesión</Button>
                 </div>
             </Form>
+            
         </div>
     );
 }

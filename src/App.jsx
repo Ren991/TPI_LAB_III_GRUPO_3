@@ -4,6 +4,7 @@ import MoviePlayer from "./Pages/MoviePlayer/MoviePlayer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./Pages/Signup/Signup";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Favorites from "./Pages/Favorites/Favorites";
 
 
 function App() {
@@ -32,6 +33,12 @@ function App() {
       path: "/MoviePlayer",
       element:(
         <MoviePlayer/>
+      )
+    },
+    {
+      path: "/Favorites",
+      element:(
+        <Favorites/>
       )
     }
 
