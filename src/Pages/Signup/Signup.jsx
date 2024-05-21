@@ -5,6 +5,8 @@ import { getAuth,createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import Swal from 'sweetalert2'
 import { db } from '../../Services/firebase';
+import {  useNavigate  } from "react-router-dom";
+
 
 function SignUp() {
     const [username, setUsername] = useState('');
@@ -12,6 +14,8 @@ function SignUp() {
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
     
 
     const auth = getAuth();
@@ -26,10 +30,12 @@ function SignUp() {
             await setDoc(userDocRef, {
                 email: user.email,
                 role: 'commonUser', 
-                username: username
+                username: username,
+                favorites: [] //para guardar los favoritos.
             });
 
             console.log('User signed up and role set:', user);
+            navigate(("/signin"));
         } catch (error) {
             console.error('Error signing up:', error);
             setError(error.message);

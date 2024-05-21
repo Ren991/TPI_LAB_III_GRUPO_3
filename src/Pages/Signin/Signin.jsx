@@ -6,11 +6,13 @@ import {auth,db} from "../../Services/firebase";
 import { doc, getDoc } from 'firebase/firestore';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
+import {  useNavigate  } from "react-router-dom";
 
 function SignIn() {
 
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,25 +28,25 @@ function SignIn() {
                 const userData = userDoc.data();
                 console.log(userData);
                 console.log("User Role:", userData.role);
-            } else {
-                
+                const token = await user.getIdToken();
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('token', token);
+                navigate("/home")
+            } else {                
                 Swal.fire({
                     title: 'Error!',
                     text: 'Credenciales Inválidas',
                     icon: 'error',
                     confirmButtonText: 'Salir'
                   })
-
-            }
-           
+            }           
         }catch(err){
             Swal.fire({
                 title: 'Error!',
                 text: 'Credenciales Inválidas',
                 icon: 'error',
                 confirmButtonText: 'Salir'
-              })
-              
+              })              
         }
     }
 
@@ -70,7 +72,7 @@ function SignIn() {
                 </Button>
                 <div style={{display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
                     <h4>No tienes cuenta?</h4>
-                    <Button>Crear Cuenta</Button>
+                    <Button onClick={()=> navigate("/signup")}>Crear Cuenta</Button>
                 </div>
             </Form>
         </div>
