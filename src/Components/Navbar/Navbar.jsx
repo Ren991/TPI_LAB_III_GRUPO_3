@@ -33,6 +33,7 @@ function NavBarPage() {
       console.log("Logout exitoso");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+      localStorage.removeItem('userRol');
       setIsAuthenticated(false);
       navigate('/home'); // Redirigir a la página de inicio de sesión
     } catch (error) {

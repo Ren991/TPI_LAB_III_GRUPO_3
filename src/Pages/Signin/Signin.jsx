@@ -31,6 +31,7 @@ function SignIn() {
                 const token = await user.getIdToken();
                 localStorage.setItem('user', JSON.stringify(user));
                 localStorage.setItem('token', token);
+                localStorage.setItem('userRol', userData.role);
                 navigate("/home")
             } else {                
                 Swal.fire({
