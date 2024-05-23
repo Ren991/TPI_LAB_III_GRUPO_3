@@ -19,15 +19,11 @@ function SignIn() {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log("Login exitoso");
-            console.log("User:", user);
             const userDocRef = doc(db, 'users', user.uid);
             const userDoc = await getDoc(userDocRef);
 
             if (userDoc.exists()) {
                 const userData = userDoc.data();
-                console.log(userData);
-                console.log("User Role:", userData.role);
                 const token = await user.getIdToken();
                 localStorage.setItem('user', JSON.stringify(user));
                 localStorage.setItem('token', token);

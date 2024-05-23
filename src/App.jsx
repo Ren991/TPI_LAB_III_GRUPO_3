@@ -7,9 +7,32 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
+import { useEffect, useState } from "react";
+
 
 
 function App() {
+
+  const [userRol, setUserRol] = useState('')
+
+  useEffect(() => {
+
+    const storedRol = localStorage.getItem('userRol');
+    console.log(storedRol)
+    if (storedRol) {
+
+      setUserRol(storedRol);
+
+    }else {
+      setUserRol('')
+    };
+
+    console.log(userRol)
+
+  }, [])
+
+  
+
   const router = createBrowserRouter([
     {
       path: "/home",
@@ -33,26 +56,26 @@ function App() {
     },
     {
       path: "/moviePlayer",
-      element:(
-        <MoviePlayer/>
+      element: (
+        <MoviePlayer />
       )
     },
     {
       path: "/favorites",
-      element:(
-        <Favorites/>
+      element: (
+        <Favorites />
       )
     },
     {
       path: "/superadmin",
-      element:(
-        <SuperAdmin/>
+      element: (
+        <SuperAdmin />
       )
     },
     {
       path: "/admin",
-      element:(
-        <Admin/>
+      element: (
+        <Admin />
       )
     }
 
