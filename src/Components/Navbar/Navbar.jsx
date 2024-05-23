@@ -80,14 +80,7 @@ function NavBarPage() {
                 />
                 <Button variant="outline-success">Buscar</Button>
               </Form>
-            </Navbar.Collapse>
-            <Nav>
-              <Nav.Link href="#home">Mis Favoritos</Nav.Link>
-
-            </Nav>
-          </>
-        )}
-        <Nav>
+              <Nav>
           {videoPlayerRoute === true && (<Nav.Link href="#home">Mis Favoritos</Nav.Link>)}
           {isAuthenticated ? (
             <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
@@ -95,6 +88,15 @@ function NavBarPage() {
             <Nav.Link href="/signin">Inicio sesión</Nav.Link>
           )}
         </Nav>
+        <Nav>
+              <Nav.Link href="#home">Mis Favoritos</Nav.Link>
+
+            </Nav>
+            </Navbar.Collapse>
+            
+          </>
+        )}
+        
 
       </Container>
     </Navbar>

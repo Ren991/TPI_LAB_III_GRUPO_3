@@ -15,7 +15,6 @@ function SignUp() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
     
 
     const auth = getAuth();
@@ -25,7 +24,9 @@ function SignUp() {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(userCredential);
             const user = userCredential.user;
+            console.log(user);
             const userDocRef = doc(db, 'users', user.uid);
             await setDoc(userDocRef, {
                 email: user.email,
