@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2'
 import {  useNavigate  } from "react-router-dom";
 
-function SignIn() {
+function SignIn({setIsSignedIn, isSignedIn}) {
 
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -28,6 +28,8 @@ function SignIn() {
                 localStorage.setItem('user', JSON.stringify(user));
                 localStorage.setItem('token', token);
                 localStorage.setItem('userRol', userData.role);
+                setIsSignedIn(true);
+                console.log(isSignedIn);
                 navigate("/home")
             } else {                
                 Swal.fire({

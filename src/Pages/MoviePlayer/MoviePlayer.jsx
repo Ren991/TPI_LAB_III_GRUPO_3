@@ -4,8 +4,9 @@ import VideoPlayer from "../../Components/VideoPlayer/VideoPlayer"
 import Recommended from "../../Components/Recommended/Recommended"
 
 
-function MoviePlayer() {
+function MoviePlayer({isSignedIn}) {
 
+  console.log(isSignedIn)
   return (
     <div>
         <NavBarPage/>

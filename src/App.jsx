@@ -8,6 +8,7 @@ import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
 import { useEffect, useState } from "react";
+import Private from "./Components/Routes/Private";
 
 
 
@@ -15,7 +16,18 @@ function App() {
 
   const [userRol, setUserRol] = useState('')
 
-  useEffect(() => {
+  const [isSignedIn, setIsSignedIn] = useState(true);
+
+  const handleSignIn = () => {
+    setIsSignedIn(true);
+  };
+
+  const handleSignOut = () => {
+    setIsSignedIn(false);
+  };
+
+
+  /*useEffect(() => {
 
     const storedRol = localStorage.getItem('userRol');
     console.log(storedRol)
@@ -29,7 +41,7 @@ function App() {
 
     console.log(userRol)
 
-  }, [])
+  }, [])*/
 
   
 
@@ -44,7 +56,7 @@ function App() {
       path: "/signIn",
       element: (
 
-        <SignIn />
+        <SignIn setIsSignedIn={setIsSignedIn} isSignedIn={isSignedIn}/>
 
       ),
     },
@@ -57,7 +69,13 @@ function App() {
     {
       path: "/moviePlayer",
       element: (
-        <MoviePlayer />
+
+        <Private isSignedIn={isSignedIn}>
+
+          <MoviePlayer isSignedIn={isSignedIn}/>
+
+        </Private>
+        
       )
     },
     {
