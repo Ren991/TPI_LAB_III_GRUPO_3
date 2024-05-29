@@ -29,8 +29,7 @@ function SignIn() {
                 localStorage.setItem('user', JSON.stringify(user));
                 localStorage.setItem('token', token);
                 localStorage.setItem('userRol', userData.role);
-                setIsSignedIn(true);
-                console.log(isSignedIn);
+                //setIsSignedIn(true);
                 navigate("/home")
             } else {                
                 Swal.fire({
