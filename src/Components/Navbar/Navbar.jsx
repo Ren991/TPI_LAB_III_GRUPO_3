@@ -1,7 +1,8 @@
 import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button } from "react-bootstrap";
 import { Link, useLocation,  useNavigate  } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAuth, signOut } from 'firebase/auth';
+import { AuthContext } from "../Context/AuthContext";
 
 function NavBarPage() {
   const [adminRoute, setAdminRoute] = useState(false);
@@ -9,11 +10,10 @@ function NavBarPage() {
   const [favoritesRoute, setFavoritesRoute] = useState(false);
   const [videoPlayerRoute, setVideoPlayerRoute] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { setIsSignedIn } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(homeRoute);
-  console.log(videoPlayerRoute);
 
   useEffect(() => {
     setHomeRoute(location.pathname === "/home");
@@ -34,7 +34,8 @@ function NavBarPage() {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       localStorage.removeItem('userRol');
-      setIsAuthenticated(false);
+      //setIsAuthenticated(false);
+      setIsSignedIn(false);
       navigate('/home'); // Redirigir a la página de inicio de sesión
     } catch (error) {
       console.error("Error cerrando sesión:", error);

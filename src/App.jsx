@@ -1,104 +1,61 @@
-import Home from "./Pages/Home/Home"
+import React, { useContext, useState } from "react";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Home from "./Pages/Home/Home";
 import SignIn from "./Pages/Signin/Signin";
 import MoviePlayer from "./Pages/MoviePlayer/MoviePlayer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./Pages/Signup/Signup";
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
-import { useEffect, useState } from "react";
 import Private from "./Components/Routes/Private";
-
-
+import { AuthContext } from "./Components/Context/AuthContext";
 
 function App() {
+  const [userRol, setUserRol] = useState('');
+  const { isSignedIn } = useContext(AuthContext);
 
-  const [userRol, setUserRol] = useState('')
-
-  const [isSignedIn, setIsSignedIn] = useState(true);
-
-  const handleSignIn = () => {
-    setIsSignedIn(true);
-  };
-
-  const handleSignOut = () => {
-    setIsSignedIn(false);
-  };
-
-
-  /*useEffect(() => {
-
-    const storedRol = localStorage.getItem('userRol');
-    console.log(storedRol)
-    if (storedRol) {
-
-      setUserRol(storedRol);
-
-    }else {
-      setUserRol('')
-    };
-
-    console.log(userRol)
-
-  }, [])*/
-
-  
+  console.log(isSignedIn);
 
   const router = createBrowserRouter([
     {
       path: "/home",
-      element: (
-        <Home />
-      ),
+      element: <Home />,
     },
     {
       path: "/signIn",
-      element: (
-
-        <SignIn setIsSignedIn={setIsSignedIn} isSignedIn={isSignedIn}/>
-
-      ),
+      element: <SignIn />,
     },
     {
       path: "/signUp",
-      element: (
-        <SignUp />
-      ),
+      element: <SignUp />,
     },
     {
       path: "/moviePlayer",
       element: (
-
-        <Private isSignedIn={isSignedIn}>
-
-          <MoviePlayer isSignedIn={isSignedIn}/>
-
+        <Private>
+          <MoviePlayer />
         </Private>
-        
-      )
+      ),
     },
     {
       path: "/favorites",
-      element: (
-        <Favorites />
-      )
+      element: <Favorites />,
     },
     {
       path: "/superadmin",
-      element: (
-        <SuperAdmin />
-      )
+      element: <SuperAdmin />,
     },
     {
       path: "/admin",
-      element: (
-        <Admin />
-      )
-    }
-
+      element: <Admin />,
+    },
   ]);
-  return <RouterProvider router={router} />;
+
+  return (
+    <RouterProvider router={router} />
+  );
 }
 
 export default App;
+
