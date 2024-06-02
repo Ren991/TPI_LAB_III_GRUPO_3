@@ -1,4 +1,5 @@
-import Home from "./Pages/Home/Home"
+// App.js
+import Home from "./Pages/Home/Home";
 import SignIn from "./Pages/Signin/Signin";
 import MoviePlayer from "./Pages/MoviePlayer/MoviePlayer";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,15 +8,13 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
-import { useEffect, useState } from "react";
-
+import { UserProvider } from "./Components/AuthContext/AuthContext";
 
 
 function App() {
 
-  const [userRol, setUserRol] = useState('')
 
-  useEffect(() => {
+  /*useEffect(() => {
 
     const storedRol = localStorage.getItem('userRol');
     console.log(storedRol)
@@ -23,64 +22,57 @@ function App() {
 
       setUserRol(storedRol);
 
-    }else {
+    } else {
       setUserRol('')
     };
 
     console.log(userRol)
 
-  }, [])
-
-  
+  }, []);*/
 
   const router = createBrowserRouter([
     {
       path: "/home",
-      element: (
-        <Home />
-      ),
+      element: <Home />,
     },
     {
       path: "/signIn",
-      element: (
-
-        <SignIn />
-
-      ),
+      element: <SignIn />,
     },
     {
       path: "/signUp",
-      element: (
-        <SignUp />
-      ),
+      element: <SignUp />,
     },
     {
       path: "/moviePlayer",
-      element: (
-        <MoviePlayer />
-      )
+      element:
+        
+          <MoviePlayer />
+        
     },
     {
       path: "/favorites",
-      element: (
+      element: 
+      
         <Favorites />
-      )
+      
     },
     {
       path: "/superadmin",
-      element: (
-        <SuperAdmin />
-      )
+      element: <SuperAdmin />,
     },
     {
       path: "/admin",
-      element: (
-        <Admin />
-      )
-    }
-
+      element: <Admin />,
+    },
   ]);
-  return <RouterProvider router={router} />;
+
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  );
 }
 
 export default App;
+
