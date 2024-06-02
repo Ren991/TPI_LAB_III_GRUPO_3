@@ -42,12 +42,13 @@ function SignIn() {
                 const userData = userDoc.data();
                 const token = await user.getIdToken();
                 localStorage.setItem('user', JSON.stringify(user));
+                
                 localStorage.setItem('token', token);
                 localStorage.setItem('userRol', userData.role);
-                const dataUser = { email: mail, token: token };
+                const dataUser = { email: mail, token: token, role: userData.role };
                 //setIsSignedIn(true);
                 //setUserRol(userData.role);  
-                signIn(userData);
+                signIn(dataUser);
 
                 navigate("/home")
             } else {
