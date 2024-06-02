@@ -14,7 +14,7 @@ const Admin = () => {
   
   useEffect(() => {
     console.log(user);
-    if (user?.role !== "admin") {
+    if (user &&user.role && user.role !==  "admin") {
      navigate("/home")
     }
     console.log(user);
