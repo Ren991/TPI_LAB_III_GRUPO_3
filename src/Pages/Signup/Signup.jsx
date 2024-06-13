@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { getAuth,createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import Swal from 'sweetalert2'
 import { db } from '../../Services/firebase';
-import {  useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../Components/AuthContext/AuthContext"
 
 
 function SignUp() {
@@ -15,7 +16,15 @@ function SignUp() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    
+    const { user } = useUser();
+
+
+    useEffect(() => {
+        if (user !== null) {
+            navigate("/home")
+        }
+    }, [user]);
+
 
     const auth = getAuth();
     const handleSubmit = async (e) => {
@@ -30,7 +39,7 @@ function SignUp() {
             const userDocRef = doc(db, 'users', user.uid);
             await setDoc(userDocRef, {
                 email: user.email,
-                role: 'commonUser', 
+                role: 'commonUser',
                 username: username,
                 favorites: [] //para guardar los favoritos.
             });
@@ -45,24 +54,26 @@ function SignUp() {
                 text: 'Error al registrarse, intentente nuevamente.',
                 icon: 'error',
                 confirmButtonText: 'Salir'
-              })
+            })
         }
 
         if (password !== repeatPassword) {
             setError('Las contraseñas no coinciden');
-            
+
             return;
         }
 
-        
+
     };
 
     return (
-        <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "50px", backgroundColor: "#818fdb" , paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
-        WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
-        MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)' }}>
-            
-            <Form style={{width: "60%", marginLeft: "auto", marginRight: "auto"}} onSubmit={handleSubmit}>
+        <div style={{
+            width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "50px", backgroundColor: "#818fdb", paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+            WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+            MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'
+        }}>
+
+            <Form style={{ width: "60%", marginLeft: "auto", marginRight: "auto" }} onSubmit={handleSubmit}>
                 <h3>Crear Cuenta:</h3>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -74,7 +85,7 @@ function SignUp() {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </Form.Group>
-                
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -107,12 +118,12 @@ function SignUp() {
                 <Button variant="primary" type="submit">
                     Crear cuenta
                 </Button>
-                <div style={{display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
                     <h4>Ya tienes cuenta</h4>
                     <Button>Iniciar Sesión</Button>
                 </div>
             </Form>
-            
+
         </div>
     );
 }

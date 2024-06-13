@@ -2,7 +2,7 @@ import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button } from "
 import { Link, useLocation,  useNavigate  } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { getAuth, signOut } from 'firebase/auth';
-import { AuthContext } from "../Context/AuthContext";
+import { useUser} from "../AuthContext/AuthContext";
 
 function NavBarPage() {
   const [adminRoute, setAdminRoute] = useState(false);
@@ -10,10 +10,11 @@ function NavBarPage() {
   const [favoritesRoute, setFavoritesRoute] = useState(false);
   const [videoPlayerRoute, setVideoPlayerRoute] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { setIsSignedIn } = useContext(AuthContext);
+  const {signOut} = useUser();
 
   const location = useLocation();
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     setHomeRoute(location.pathname === "/home");
@@ -33,9 +34,8 @@ function NavBarPage() {
       console.log("Logout exitoso");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
-      localStorage.removeItem('userRol');
-      //setIsAuthenticated(false);
-      setIsSignedIn(false);
+      setIsAuthenticated(false);
+      signOut();
       navigate('/home'); // Redirigir a la página de inicio de sesión
     } catch (error) {
       console.error("Error cerrando sesión:", error);
@@ -49,7 +49,7 @@ function NavBarPage() {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#home" className="me-auto">
-          <Link to='/home' style={{textDecoration: 'None', color: 'black'}}>ArgFlix</Link>
+          <Link to='/home' style={{ textDecoration: 'None', color: 'black' }}>ArgFlix</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         {homeRoute === true && (
@@ -82,7 +82,14 @@ function NavBarPage() {
                 />
                 <Button variant="outline-success">Buscar</Button>
               </Form>
-              <Nav>
+            </Navbar.Collapse>
+            <Nav>
+              <Nav.Link href="#home">Mis Favoritos</Nav.Link>
+
+            </Nav>
+          </>
+        )}
+        <Nav>
           {videoPlayerRoute === true && (<Nav.Link href="#home">Mis Favoritos</Nav.Link>)}
           {isAuthenticated ? (
             <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
@@ -90,15 +97,6 @@ function NavBarPage() {
             <Nav.Link href="/signin">Inicio sesión</Nav.Link>
           )}
         </Nav>
-        <Nav>
-              <Nav.Link href="#home">Mis Favoritos</Nav.Link>
-
-            </Nav>
-            </Navbar.Collapse>
-            
-          </>
-        )}
-        
 
       </Container>
     </Navbar>

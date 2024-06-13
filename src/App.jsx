@@ -1,21 +1,34 @@
-import React, { useContext, useState } from "react";
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+// App.js
 import Home from "./Pages/Home/Home";
 import SignIn from "./Pages/Signin/Signin";
 import MoviePlayer from "./Pages/MoviePlayer/MoviePlayer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./Pages/Signup/Signup";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
-import Private from "./Components/Routes/Private";
-import { AuthContext } from "./Components/Context/AuthContext";
+import { UserProvider } from "./Components/AuthContext/AuthContext";
+
 
 function App() {
-  const [userRol, setUserRol] = useState('');
-  const { isSignedIn } = useContext(AuthContext);
 
-  console.log(isSignedIn);
+
+  /*useEffect(() => {
+
+    const storedRol = localStorage.getItem('userRol');
+    console.log(storedRol)
+    if (storedRol) {
+
+      setUserRol(storedRol);
+
+    } else {
+      setUserRol('')
+    };
+
+    console.log(userRol)
+
+  }, []);*/
 
   const router = createBrowserRouter([
     {
@@ -32,15 +45,17 @@ function App() {
     },
     {
       path: "/moviePlayer",
-      element: (
-        <Private>
+      element:
+
           <MoviePlayer />
-        </Private>
-      ),
+
     },
     {
       path: "/favorites",
-      element: <Favorites />,
+      element: 
+
+        <Favorites />
+
     },
     {
       path: "/superadmin",
@@ -53,9 +68,10 @@ function App() {
   ]);
 
   return (
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   );
 }
 
 export default App;
-
