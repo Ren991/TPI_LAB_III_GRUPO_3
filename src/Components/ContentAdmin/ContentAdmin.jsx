@@ -58,7 +58,6 @@ const ContentAdmin = () => {
 
         if (formValues) {
             try {
-                // Save the data to the Firestore collection
                 const docRef = await addDoc(collection(db, "peliculas"), formValues);
                 console.log("Document written with ID: ", docRef.id);
                 Swal.fire('Éxito', 'Película/Serie agregada con éxito', 'success');
