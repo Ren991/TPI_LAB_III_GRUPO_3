@@ -18,6 +18,7 @@ export const UserProvider = ({ children }) => {
     if (storedUser && token) {
       setUser(JSON.parse(storedUser));
     }
+    console.log(user);
   }, []);
 
   const signIn = (userData) => {
