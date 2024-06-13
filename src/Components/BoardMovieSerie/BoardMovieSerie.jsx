@@ -85,7 +85,7 @@ const BoardMovieSerie = () => {
                 marginTop: "15px",
             }}
         >
-            <h3>Favoritos</h3>
+            
             <Container>
                 <Row>
                     {movies.map((movie, index) => (
