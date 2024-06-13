@@ -17,6 +17,7 @@ const Admin = () => {
     if (user &&user.role && user.role !==  "admin") {
      navigate("/home")
     }
+    
     console.log(user);
   }, [user]);     
 
