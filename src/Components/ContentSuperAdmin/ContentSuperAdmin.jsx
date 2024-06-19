@@ -153,16 +153,7 @@ const ContentSuperAdmin = () => {
             <div>
                 <BoardMovieSerie />
             </div>
-            <div style={{ marginTop: '20px' }}>
-                <h3>Lista de Admins</h3>
-                <ul>
-                    {admins.map(admin => (
-                        <li key={admin.id}>
-                            {admin.username} ({admin.email})
-                        </li>
-                    ))}
-                </ul>
-            </div>
+           
         </div>
     );
 }
