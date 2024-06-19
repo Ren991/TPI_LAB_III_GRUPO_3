@@ -46,16 +46,16 @@ function App() {
     {
       path: "/moviePlayer",
       element:
-        
+
           <MoviePlayer />
-        
+
     },
     {
       path: "/favorites",
       element: 
-      
+
         <Favorites />
-      
+
     },
     {
       path: "/superadmin",
@@ -75,4 +75,3 @@ function App() {
 }
 
 export default App;
-

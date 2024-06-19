@@ -1,6 +1,6 @@
 import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button } from "react-bootstrap";
 import { Link, useLocation,  useNavigate  } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAuth, signOut } from 'firebase/auth';
 import { useUser} from "../AuthContext/AuthContext";
 
@@ -14,6 +14,7 @@ function NavBarPage() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useUser();
   
 
   useEffect(() => {
@@ -24,8 +25,9 @@ function NavBarPage() {
 
     const user = localStorage.getItem('user');
     setIsAuthenticated(!!user);
-
+    console.log(user.role);
   }, [location.pathname]);
+  
 
   const handleLogout = async () => {
     const auth = getAuth();
@@ -70,7 +72,7 @@ function NavBarPage() {
                     Another action
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                  <NavDropdown.Divider />
+                  <NavDropdown.Divider /> 
                 </NavDropdown>
               </Nav>
               <Form className="d-flex me-auto">
@@ -85,8 +87,18 @@ function NavBarPage() {
             </Navbar.Collapse>
             <Nav>
               <Nav.Link href="#home">Mis Favoritos</Nav.Link>
-
             </Nav>
+            {user.role === "superAdmin" &&           
+            <Nav>
+              <Nav.Link onClick={() => navigate("/superAdmin")}>superAdmin</Nav.Link>
+            </Nav>
+            }
+            {user.role === "admin" &&           
+            <Nav>
+              <Nav.Link onClick={() => navigate("/admin")} >Admin</Nav.Link>
+            </Nav>
+            }
+            
           </>
         )}
         <Nav>
