@@ -16,6 +16,7 @@ function ContentHome() {
   const [news, setNews] = useState([]);
   const [searchMovies, setSearchMovies] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
 
 
 
@@ -32,55 +33,63 @@ function ContentHome() {
   }, [movies]);
   
   useEffect(() => {
+    let filtered = movies;
+
     if (searchMovies.trim() !== "") {
-      const filtered = movies.filter(movie => 
+      filtered = filtered.filter(movie =>
         movie.nombre && movie.nombre.toLowerCase().includes(searchMovies.toLowerCase())
       );
-      setFilteredMovies(filtered);
-      console.log(filteredMovies);
-    } else {
-      setFilteredMovies([]);
-      
     }
-  }, [searchMovies, movies]);
 
+    if (selectedGenre !== "") {
+      if(selectedGenre !== "Película" && selectedGenre !== "Serie")
+      filtered = filtered.filter(movie =>
+        movie.genero && movie.genero.toLowerCase() === selectedGenre.toLowerCase()
+      )
+      else if(selectedGenre === "Película" || selectedGenre === "Serie"){
+        console.log(selectedGenre);
+        filtered = filtered.filter(movie =>
+          movie.tipo && movie.tipo.toLowerCase() === selectedGenre.toLowerCase()
+        )
+
+      }
+    }
+
+    setFilteredMovies(filtered);
+  }, [searchMovies, selectedGenre, movies]);
+  
+  
+  
   const handleSearchInputChange = (e) => {
     setSearchMovies(e.target.value);
   };
 
 
-  
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+  };
 
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="#home">Que ver?</Nav.Link>
 
               <NavDropdown title="Generos" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1"></NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Drama</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Fantasía</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action/3.3">Comedia</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action/3.3">Terror</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action/3.3">Ciencia Ficción</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action/3.3">Acción</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action/3.3">Misterio</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("")}>Volver</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Drama")}>Drama</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Fantasía")}>Fantasía</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Comedia")}>Comedia</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Terror")}>Terror</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Ciencia Ficción")}>Ciencia Ficción</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Acción")}>Acción</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Misterio")}>Misterio</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Películas
-                </NavDropdown.Item>
-
-                <NavDropdown.Item href="#action/3.3">Series</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Película")}>Películas</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleGenreSelect("Serie")}>Series</NavDropdown.Item>
               </NavDropdown>
               <Form className="d-flex me-auto">
                 <FormControl
@@ -90,14 +99,13 @@ function ContentHome() {
                   aria-label="Search"
                   onChange={handleSearchInputChange}
                 />
-                
               </Form>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       
-      {searchMovies.trim() === "" ? (
+      {searchMovies.trim() === ""  && selectedGenre === "" ? (
         <>
           <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/11/greatest-movies-of-all-time.jpg" style={{ width: "100%", height: "480px" }} />
           <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
