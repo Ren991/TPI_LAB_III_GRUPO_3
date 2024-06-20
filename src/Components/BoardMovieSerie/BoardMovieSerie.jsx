@@ -1,30 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import Swal from 'sweetalert2';
 import { db } from '../../Services/firebase';
 import { collection, getDocs,doc,updateDoc, deleteDoc,addDoc } from "firebase/firestore";
+import { MoviesContext } from "../MovieContext/MovieContext";
+
 
 const BoardMovieSerie = () => {
-    const [movies, setMovies] = useState([]);    
-
-    const fetchMovies = async () => {
-        try {
-            const querySnapshot = await getDocs(collection(db, "peliculas"));
-            const moviesList = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setMovies(moviesList);
-            
-        } catch (error) {
-            console.error("Error fetching movies: ", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchMovies();
-        
-    }, [movies]);
+    const { fetchMovies, movies } = useContext(MoviesContext);
+    
 
     const editMovie = (movie) => {
         console.log(movie)
@@ -71,7 +55,7 @@ const BoardMovieSerie = () => {
                     const userDoc = doc(db, 'peliculas', movie.id);
                     await updateDoc(userDoc, nuevosValores );                    
                     Swal.fire('Éxito', 'Película/Serie Editada con éxito', 'success');
-                    
+                    fetchMovies();
                 } catch (e) {
                     console.error("Error adding document: ", e);
                     Swal.fire('Error', 'Hubo un problema al Editar la Película/Serie', 'error');
@@ -95,6 +79,7 @@ const BoardMovieSerie = () => {
                 console.log(userDoc);
                 await deleteDoc(userDoc, movie.nombre );                    
                 Swal.fire('Éxito', 'Película/Serie eliminada con éxito', 'success');
+                fetchMovies();
                 
             } catch (e) {
                 console.error("Error adding document: ", e);
