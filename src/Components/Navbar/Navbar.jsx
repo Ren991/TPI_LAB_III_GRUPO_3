@@ -56,7 +56,7 @@ function NavBarPage() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         {homeRoute === true && (
           <>
-            <Navbar.Collapse id="basic-navbar-nav">
+            {/* // <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
                 <NavDropdown title="Que Ver" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Que Ver</NavDropdown.Item>
@@ -84,7 +84,7 @@ function NavBarPage() {
                 />
                 <Button variant="outline-success">Buscar</Button>
               </Form>
-            </Navbar.Collapse>
+             </Navbar.Collapse> */}
             <Nav>
               <Nav.Link href="#home">Mis Favoritos</Nav.Link>
             </Nav>
