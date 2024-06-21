@@ -13,6 +13,7 @@ function News({news}) {
                     <Card.Body>
                         <Card.Title>{movie.nombre}</Card.Title>
                         <Card.Subtitle>{movie.anioLanzamiento}</Card.Subtitle>
+                        <Card.Subtitle>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
                         <Button variant="primary" onClick={()=>navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
                     </Card.Body>
                 </Card>
