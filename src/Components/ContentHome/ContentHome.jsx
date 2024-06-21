@@ -6,6 +6,7 @@ import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card } 
 import Swal from "sweetalert2";
 
 import { MoviesContext } from "../MovieContext/MovieContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,7 +18,7 @@ function ContentHome() {
   const [searchMovies, setSearchMovies] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
-
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -127,7 +128,7 @@ function ContentHome() {
                     <Card.Body>
                         <Card.Title>{movie.nombre}</Card.Title>
                         <Card.Subtitle>{movie.anioLanzamiento}</Card.Subtitle>
-                        <Button variant="primary">Reproducir</Button>
+                        <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
                     </Card.Body>
                 </Card>
             ))}

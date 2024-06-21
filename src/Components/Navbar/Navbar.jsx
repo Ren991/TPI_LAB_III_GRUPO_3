@@ -25,7 +25,7 @@ function NavBarPage() {
 
     const user = localStorage.getItem('user');
     setIsAuthenticated(!!user);
-    console.log(user.role);
+    
   }, [location.pathname]);
   
 
@@ -88,12 +88,12 @@ function NavBarPage() {
             <Nav>
               <Nav.Link href="#home">Mis Favoritos</Nav.Link>
             </Nav>
-            {user.role === "superAdmin" &&           
+            {user?.role === "superAdmin" &&           
             <Nav>
               <Nav.Link onClick={() => navigate("/superAdmin")}>superAdmin</Nav.Link>
             </Nav>
             }
-            {user.role === "admin" &&           
+            {user?.role === "admin" &&           
             <Nav>
               <Nav.Link onClick={() => navigate("/admin")} >Admin</Nav.Link>
             </Nav>
