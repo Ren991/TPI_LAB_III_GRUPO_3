@@ -5,8 +5,8 @@ import Recommended from "../../Components/Recommended/Recommended"
 import { AuthContext } from "../../Components/Context/AuthContext"
 
 function MoviePlayer() {
-  const { isSignedIn } = useContext(AuthContext);
-  console.log(isSignedIn)
+ /*  const { isSignedIn } = useContext(AuthContext);
+  console.log(isSignedIn) */
   return (
     <div>
         <NavBarPage/>

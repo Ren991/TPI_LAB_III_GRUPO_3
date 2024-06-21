@@ -2,45 +2,26 @@
 import Carousel from 'react-bootstrap/Carousel';
 
 
-function Trends() {
+function Trends({trends}) {
 
 
     return (
         <>
             <Carousel>
-                <Carousel.Item>
-                    <img
-                        className="d-block w-100"
-                        src="https://bmsvieira.github.io/moovie.js/demo-template/images/moovie_black.png"
-                        alt="New Carousel Image"
-                    />
-                    <Carousel.Caption>
-                    <h3 style={{color:"black"}}>Interestelar</h3>
-                        <p>Slide Description</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img
-                        className="d-block w-100"
-                        src="https://bmsvieira.github.io/moovie.js/demo-template/images/moovie_black.png"
-                        alt="New Carousel Image"
-                    />
-                    <Carousel.Caption>
-                        <h3 style={{color:"black"}}>Shreek 2</h3>
-                        <p>Slide Description</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img
-                        className="d-block w-100"
-                        src="https://bmsvieira.github.io/moovie.js/demo-template/images/moovie_black.png"
-                        alt="New Carousel Image"
-                    />
-                    <Carousel.Caption>
-                    <h3 style={{color:"black"}}>Spriderman 2</h3>
-                        <p>Slide Description</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
+            {trends && trends.map((movie) => (
+                    <Carousel.Item key={movie.id} style={{cursor:"pointer"}}>
+                        <img
+                            style={{height:590,objectFit:"fit"}}
+                            className="d-block w-100"
+                            src={movie.urlImagen || 'https://via.placeholder.com/800x400'}
+                            alt={`Image of ${movie.nombre}`}
+                        />
+                        <Carousel.Caption>
+                            <h3 style={{color: "white"}}>{movie.nombre}</h3>
+                            <p style={{fontSize:"25px",backgroundColor:"black",borderRadius:"0.5rem"}}>{movie.genero || '-'}</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                ))}
             </Carousel>
         </>
     )

@@ -9,6 +9,7 @@ import Favorites from "./Pages/Favorites/Favorites";
 import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
 import { UserProvider } from "./Components/AuthContext/AuthContext";
+import { MoviesProvider } from "./Components/MovieContext/MovieContext";
 
 
 function App() {
@@ -69,7 +70,9 @@ function App() {
 
   return (
     <UserProvider>
-      <RouterProvider router={router} />
+      <MoviesProvider>
+        <RouterProvider router={router} />
+      </MoviesProvider>
     </UserProvider>
   );
 }
