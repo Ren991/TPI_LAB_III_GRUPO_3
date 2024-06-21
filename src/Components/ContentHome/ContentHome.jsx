@@ -70,6 +70,14 @@ function ContentHome() {
     setSelectedGenre(genre);
   };
 
+  const randomMovie = () => {
+    if (movies.length > 0) {
+      const randomIndex = Math.floor(Math.random() * movies.length);
+      const randomMovie = movies[randomIndex];
+      navigate(`/moviePlayer/${randomMovie.id}`);
+    }
+  };
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -77,7 +85,7 @@ function ContentHome() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Que ver?</Nav.Link>
+              <Nav.Link href="#home" onClick={randomMovie}>Que ver?</Nav.Link>
 
               <NavDropdown title="Generos" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={() => handleGenreSelect("")}>Volver</NavDropdown.Item>

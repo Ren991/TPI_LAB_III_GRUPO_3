@@ -58,7 +58,7 @@ function NavBarPage() {
           <>
   
             <Nav>
-              <Nav.Link href="#home">Mis Favoritos</Nav.Link>
+              <Nav.Link onClick={()=> navigate("/favorites")}>Mis Favoritos</Nav.Link>
             </Nav>
             {user?.role === "superAdmin" &&           
             <Nav>
