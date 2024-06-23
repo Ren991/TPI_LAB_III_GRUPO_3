@@ -14,7 +14,7 @@ const SuperAdmin = () => {
   
   useEffect(() => {
     console.log(user);
-    if (user &&user.role && user.role !== "superAdmin") {
+    if (user && user.role && user.role !== "superAdmin" || user === null) {
      navigate("/home")
     }
     console.log(user);

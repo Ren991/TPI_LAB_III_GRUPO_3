@@ -25,7 +25,7 @@ function NavBarPage() {
 
     const user = localStorage.getItem('user');
     setIsAuthenticated(!!user);
-    console.log(user.role);
+    
   }, [location.pathname]);
   
 
@@ -53,47 +53,19 @@ function NavBarPage() {
         <Navbar.Brand href="#home" className="me-auto">
           <Link to='/home' style={{ textDecoration: 'None', color: 'black' }}>ArgFlix</Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
         {homeRoute === true && (
           <>
-            {/* // <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto">
-                <NavDropdown title="Que Ver" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Que Ver</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                </NavDropdown>
-                <NavDropdown title="Genero" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Genero</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                  <NavDropdown.Divider /> 
-                </NavDropdown>
-              </Nav>
-              <Form className="d-flex me-auto">
-                <FormControl
-                  type="search"
-                  placeholder="Buscar"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Buscar</Button>
-              </Form>
-             </Navbar.Collapse> */}
+  
             <Nav>
-              <Nav.Link href="#home">Mis Favoritos</Nav.Link>
+              <Nav.Link onClick={()=> navigate("/favorites")}>Mis Favoritos</Nav.Link>
             </Nav>
-            {user.role === "superAdmin" &&           
+            {user?.role === "superAdmin" &&           
             <Nav>
               <Nav.Link onClick={() => navigate("/superAdmin")}>superAdmin</Nav.Link>
             </Nav>
             }
-            {user.role === "admin" &&           
+            {user?.role === "admin" &&           
             <Nav>
               <Nav.Link onClick={() => navigate("/admin")} >Admin</Nav.Link>
             </Nav>

@@ -6,6 +6,7 @@ import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card } 
 import Swal from "sweetalert2";
 
 import { MoviesContext } from "../MovieContext/MovieContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,7 +18,7 @@ function ContentHome() {
   const [searchMovies, setSearchMovies] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
-
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -69,6 +70,14 @@ function ContentHome() {
     setSelectedGenre(genre);
   };
 
+  const randomMovie = () => {
+    if (movies.length > 0) {
+      const randomIndex = Math.floor(Math.random() * movies.length);
+      const randomMovie = movies[randomIndex];
+      navigate(`/moviePlayer/${randomMovie.id}`);
+    }
+  };
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -76,7 +85,7 @@ function ContentHome() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Que ver?</Nav.Link>
+              <Nav.Link href="#home" onClick={randomMovie}>Que ver?</Nav.Link>
 
               <NavDropdown title="Generos" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={() => handleGenreSelect("")}>Volver</NavDropdown.Item>
@@ -127,7 +136,9 @@ function ContentHome() {
                     <Card.Body>
                         <Card.Title>{movie.nombre}</Card.Title>
                         <Card.Subtitle>{movie.anioLanzamiento}</Card.Subtitle>
-                        <Button variant="primary">Reproducir</Button>
+                        <Card.Subtitle>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+
+                        <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
                     </Card.Body>
                 </Card>
             ))}

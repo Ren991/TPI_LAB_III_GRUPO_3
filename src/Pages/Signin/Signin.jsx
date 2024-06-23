@@ -42,10 +42,10 @@ function SignIn() {
                 const userData = userDoc.data();
                 const token = await user.getIdToken();
                 localStorage.setItem('user', JSON.stringify(user));
-                
+                console.log(userData);
                 localStorage.setItem('token', token);
                 localStorage.setItem('userRol', userData.role);
-                const dataUser = { email: mail, token: token, role: userData.role };
+                const dataUser = {id:user.uid, email: mail, token: token, role: userData.role , favorites: userData.favorites };
                 //setIsSignedIn(true);
                 //setUserRol(userData.role);  
                 signIn(dataUser);

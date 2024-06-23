@@ -45,7 +45,7 @@ function App() {
       element: <SignUp />,
     },
     {
-      path: "/moviePlayer",
+      path: "/moviePlayer/:id",
       element:
 
           <MoviePlayer />
@@ -66,6 +66,8 @@ function App() {
       path: "/admin",
       element: <Admin />,
     },
+
+
   ]);
 
   return (
