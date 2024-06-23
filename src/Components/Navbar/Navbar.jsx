@@ -56,10 +56,12 @@ function NavBarPage() {
         {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
         {homeRoute === true && (
           <>
-  
-            <Nav>
+            {
+              user &&<Nav>
               <Nav.Link onClick={()=> navigate("/favorites")}>Mis Favoritos</Nav.Link>
             </Nav>
+            }
+            
             {user?.role === "superAdmin" &&           
             <Nav>
               <Nav.Link onClick={() => navigate("/superAdmin")}>superAdmin</Nav.Link>
