@@ -1,16 +1,18 @@
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom";
 import { MoviesContext } from "../MovieContext/MovieContext";
+import { useUser } from "../../Components/AuthContext/AuthContext";
 import { useContext, useState, useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card, Row, Col } from "react-bootstrap";
 import Spinner from 'react-bootstrap/Spinner';
 
-
-
 function VideoPlayer() {
   const { id } = useParams();
   const { movies } = useContext(MoviesContext);
+  const { user, addFavorites, deleteFavorites } = useUser(); 
+
   const movie = movies.find(movie => movie.id === id);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,17 +24,28 @@ function VideoPlayer() {
     }
   }, [movie, movies]);
 
+  useEffect(() => {
+    if (user && movie) {
+      setIsFavorite(user.favorites.includes(movie.id));
+    }
+  }, [user, movie]);
 
   if (!movie) {
     return (
       <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
+        <span className="visually-hidden">cargando...</span>
       </Spinner>
     );
   }
 
-
-
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      deleteFavorites(movie.id);
+    } else {
+      addFavorites(movie.id);
+    }
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
@@ -41,12 +54,14 @@ function VideoPlayer() {
         <iframe
           width="100%"
           height="415"
-          src={movie.urlVideo} // Usa la URL del video de la película encontrada
+          src={movie.urlVideo}
           title={movie.nombre}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
-        <Button>Añadir a favoritos</Button>
+        <Button onClick={handleFavoriteClick}>
+          {isFavorite ? "Eliminar de favoritos" : "Añadir a favoritos"}
+        </Button>
       </div>
       <div
         style={{
