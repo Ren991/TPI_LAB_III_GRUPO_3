@@ -3,6 +3,8 @@ import Trends from "../Trends/Trends"
 import Image from 'react-bootstrap/Image';
 import React, { useContext, useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card } from "react-bootstrap";
+import { useUser } from "../../Components/AuthContext/AuthContext";
+
 import Swal from "sweetalert2";
 
 import { MoviesContext } from "../MovieContext/MovieContext";
@@ -12,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 function ContentHome() {
   const { movies } = useContext(MoviesContext);
+  const { user } = useUser();
 
   const [trends, setTrends] = useState([]);
   const [news, setNews] = useState([]);
@@ -119,9 +122,9 @@ function ContentHome() {
           <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/11/greatest-movies-of-all-time.jpg" style={{ width: "100%", height: "480px" }} />
           <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
             <h2>Tendencias</h2>
-            <Trends trends={trends} />
+            <Trends trends={trends} user={user} />
             <h2>Novedades</h2>
-            <News news={news} />
+            <News news={news} user={user} />
           </div>
         </>
       ) : (
@@ -132,13 +135,13 @@ function ContentHome() {
               <div style={{display:"flex", justifyContent:"space-around",flexWrap:"wrap"}}>
               {filteredMovies.map((movie, index) => (
                 <Card key={index} style={{ width: '18rem', marginTop:"12px" }}>
-                    <Card.Img variant="top" src={movie.urlImagen} />
+                    <Card.Img variant="top" src={movie.urlImagen} style={{ objectFit: 'cover', width: '100%', height: '15rem' }}/>
                     <Card.Body>
-                        <Card.Title>{movie.nombre}</Card.Title>
-                        <Card.Subtitle>{movie.anioLanzamiento}</Card.Subtitle>
-                        <Card.Subtitle>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+                        <Card.Title style={{marginTop:"10px"}}>{movie.nombre}</Card.Title>
+                        <Card.Subtitle style={{marginTop:"10px"}}>{movie.anioLanzamiento}</Card.Subtitle>
+                        <Card.Subtitle style={{marginTop:"10px"}}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
 
-                        <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
+                        <Button  style={{marginTop:"15px"}} variant="primary" disabled={!user}  onClick={() =>  navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
                     </Card.Body>
                 </Card>
             ))}

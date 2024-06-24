@@ -3,14 +3,14 @@ import Carousel from 'react-bootstrap/Carousel';
 import { useNavigate } from 'react-router-dom';
 
 
-function Trends({trends}) {
+function Trends({trends,user}) {
 const navigate = useNavigate();
 
     return (
         <>
             <Carousel>
             {trends && trends.map((movie) => (
-                    <Carousel.Item key={movie.id} style={{cursor:"pointer"}} onClick={()=>navigate(`/moviePlayer/${movie.id}`)}>
+                    <Carousel.Item key={movie.id} style={{cursor: user ? "pointer" : "default"}} onClick={()=>navigate(`/moviePlayer/${movie.id}`)}>
                         <img
                             style={{height:590,objectFit:"fit"}}
                             className="d-block w-100"

@@ -162,7 +162,7 @@ const BoardMovieSerie = () => {
                     {movies.map((movie, index) => (
                         <Col key={index} sm={4} md={4} lg={4} className="mb-4">
                             <Card style={{ width: "15rem" }}>
-                                <Card.Img variant="top" src={movie.urlImagen} />
+                                <Card.Img variant="top" src={movie.urlImagen} style={{ objectFit: 'cover', width: '100%', height: '15rem' }}/>
                                 <Card.Body>
                                     <Card.Title>{movie.nombre}</Card.Title>
                                     <Button variant="primary" onClick={() => editMovie(movie)}>Editar</Button>

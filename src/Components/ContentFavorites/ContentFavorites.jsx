@@ -42,15 +42,18 @@ const ContentFavorites = () => {
           <Row>
             {favoritesMovies.map((movie, index) => (
               <Col key={index} sm={4} md={4} lg={4} className="mb-4">
-                <Card style={{ width: "15rem",cursor:"pointer" }} onClick={() => navigate(`/moviePlayer/${movie.id}`)}>
+                <Card style={{ width: "15rem",cursor:"pointer" }} >
                   <Card.Img
                     variant="top"
                     src={`${movie.urlImagen}`}
+                    style={{ objectFit: 'cover', width: '100%', height: '15rem' }}
                   />
                   <Card.Body>
                     <Card.Title style={{marginTop:"10px"}}>{movie.nombre}</Card.Title>
                     <Card.Subtitle style={{marginTop:"10px"}}>{movie.genero}</Card.Subtitle>
                     <Card.Subtitle style={{marginTop:"10px"}}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+                    <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)} style={{marginTop:"10px"}}>
+                      Reproducir                    </Button>
                     <Button
                     style={{marginTop:"10px"}}
                       variant="danger"
