@@ -10,7 +10,7 @@ const navigate = useNavigate();
         <>
             <Carousel>
             {trends && trends.map((movie) => (
-                    <Carousel.Item key={movie.id} style={{cursor: user ? "pointer" : "default"}} onClick={()=>navigate(`/moviePlayer/${movie.id}`)}>
+                    <Carousel.Item key={movie.id} style={{cursor: user ? "pointer" : "default"}} onClick={()=> user && navigate(`/moviePlayer/${movie.id}`)}>
                         <img
                             style={{height:590,objectFit:"fit"}}
                             className="d-block w-100"

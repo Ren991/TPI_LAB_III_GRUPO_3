@@ -32,13 +32,14 @@ function NavBarPage() {
   const handleLogout = async () => {
     const auth = getAuth();
     try {
+      navigate('/home'); // Redirigir a la página de inicio de sesión
+
       await signOut(auth);
       console.log("Logout exitoso");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       setIsAuthenticated(false);
       signOut();
-      navigate('/home'); // Redirigir a la página de inicio de sesión
     } catch (error) {
       console.error("Error cerrando sesión:", error);
     }

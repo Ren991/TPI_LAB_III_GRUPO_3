@@ -4,6 +4,8 @@ import { useUser } from "../../Components/AuthContext/AuthContext";
 import { MoviesContext } from "../MovieContext/MovieContext";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
+
 
 const ContentFavorites = () => {
   const [favoritesMovies, setFavoritesMovies] = useState([]);
@@ -67,9 +69,9 @@ const ContentFavorites = () => {
             ))}
           </Row>
         ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Alert key="danger" variant="danger">
+            No hay películas o series agregadas a favoritos.
+        </Alert>
         )}
       </Container>
     </div>
