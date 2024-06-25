@@ -106,7 +106,7 @@ function ContentHome() {
       {searchMovies.trim() === "" && selectedGenre === "" ? (
         <>
           <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/11/greatest-movies-of-all-time.jpg" style={{ width: "100%", height: "480px" }} />
-          <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+          <div style={{ width: "40%", marginLeft: "auto", marginRight: "auto" }}>
             <h2>Tendencias</h2>
             {loading ? (
               <Spinner animation="border" role="status">
@@ -115,7 +115,10 @@ function ContentHome() {
             ) : (
               <Trends trends={trends} user={user} />
             )}
-            <h2>Novedades</h2>
+            
+          </div>
+          <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+          <h2>Novedades</h2>
             {loading ? (
               <Spinner animation="border" role="status">
                 <span className="visually-hidden">Loading...</span>
