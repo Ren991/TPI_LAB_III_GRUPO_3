@@ -8,6 +8,12 @@ import { MoviesContext } from "../MovieContext/MovieContext";
 
 const BoardMovieSerie = () => {
     const { fetchMovies, movies } = useContext(MoviesContext);
+
+    const getYouTubeEmbedUrl = (url) => {
+        const regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|watch\?v\=|watch\?.+\&v\=)([^#\&\?]*).*/;
+        const match = url.match(regex);
+        return match && match[2].length === 11 ? `https://www.youtube.com/embed/${match[2]}` : null;
+    };
     
 
     const editMovie = (movie) => {
@@ -41,6 +47,8 @@ const BoardMovieSerie = () => {
                 const input6 = document.getElementById('input6').value;
                 const input7 = document.getElementById('input7').value;
 
+                const videoUrl = getYouTubeEmbedUrl(input4);
+
                 console.log('Valores ingresados:', input1, input2, input3, input4, input5, input6, input7);
                 const nuevosValores = {
                     anioLanzamiento: input7,
@@ -49,7 +57,7 @@ const BoardMovieSerie = () => {
                     rating:input3,
                     tipo:input6,
                     urlImagen:input5,
-                    urlVideo:input4
+                    urlVideo: videoUrl
                 }
                 try {
                     const userDoc = doc(db, 'peliculas', movie.id);
@@ -126,11 +134,13 @@ const BoardMovieSerie = () => {
                 const input6 = document.getElementById('input6').value;
                 const input7 = document.getElementById('input7').value;
 
+                const videoUrl = getYouTubeEmbedUrl(input4);
+
                 return {
                     nombre: input1,
                     genero: input2,
                     rating: input3,
-                    urlVideo: input4,
+                    urlVideo: videoUrl,
                     urlImagen: input5,
                     tipo: input6,
                     anioLanzamiento: input7
