@@ -45,7 +45,13 @@ function NavBarPage() {
     }
   };
 
-
+  const getUserEmail = () => {
+    if (user) {
+      const namePart = user.name ? user.name.split('')[0] : user.email.split('@')[0];
+      return namePart.charAt(0).toUpperCase() + namePart.slice(1);
+    }
+    return '';
+  };
 
 
   return (
@@ -73,6 +79,11 @@ function NavBarPage() {
               <Nav.Link onClick={() => navigate("/admin")} >Admin</Nav.Link>
             </Nav>
             }
+            {user && user.role !== "superAdmin" && user.role !== "admin" && (
+              <Nav>
+                <Nav.Link>{getUserEmail()}</Nav.Link>
+              </Nav>
+            )}
             
           </>
         )}
