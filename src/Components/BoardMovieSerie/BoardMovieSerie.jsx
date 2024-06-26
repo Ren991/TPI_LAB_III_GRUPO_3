@@ -4,20 +4,23 @@ import Swal from 'sweetalert2';
 import { db } from '../../Services/firebase';
 import { collection, getDocs,doc,updateDoc, deleteDoc,addDoc } from "firebase/firestore";
 import { MoviesContext } from "../MovieContext/MovieContext";
+import useSwalAlert from '../../hooks/useSwalAlert';
 
 
 const BoardMovieSerie = () => {
     const { fetchMovies, movies } = useContext(MoviesContext);
+    const [movieName, setMovieName] = useState('');
+    const { showAlert } = useSwalAlert();
 
     const getYouTubeEmbedUrl = (url) => {
         const regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|watch\?v\=|watch\?.+\&v\=)([^#\&\?]*).*/;
         const match = url.match(regex);
         return match && match[2].length === 11 ? `https://www.youtube.com/embed/${match[2]}` : null;
     };
+
     
 
     const editMovie = (movie) => {
-        console.log(movie)
         Swal.fire({
             title: 'Editar datos:',
             html:
@@ -49,7 +52,6 @@ const BoardMovieSerie = () => {
 
                 const videoUrl = getYouTubeEmbedUrl(input4);
 
-                console.log('Valores ingresados:', input1, input2, input3, input4, input5, input6, input7);
                 const nuevosValores = {
                     anioLanzamiento: input7,
                     genero:input2,
@@ -62,11 +64,10 @@ const BoardMovieSerie = () => {
                 try {
                     const userDoc = doc(db, 'peliculas', movie.id);
                     await updateDoc(userDoc, nuevosValores );                    
-                    Swal.fire('Éxito', 'Película/Serie Editada con éxito', 'success');
+                    showAlert('Película/Serie editada con éxito', 'success'); 
                     fetchMovies();
                 } catch (e) {
-                    console.error("Error adding document: ", e);
-                    Swal.fire('Error', 'Hubo un problema al Editar la Película/Serie', 'error');
+                    showAlert('Hubo un problema al editar la Película/Serie', 'error');
                 }
 
             }
@@ -84,20 +85,19 @@ const BoardMovieSerie = () => {
           }).then(async () => {
             try {
                 const userDoc = doc(db, 'peliculas', movie.id);
-                console.log(userDoc);
                 await deleteDoc(userDoc, movie.nombre );                    
-                Swal.fire('Éxito', 'Película/Serie eliminada con éxito', 'success');
+                showAlert('Película/Serie eliminada con éxito', 'success');
                 fetchMovies();
                 
             } catch (e) {
-                console.error("Error adding document: ", e);
-                Swal.fire('Error', 'Hubo un problema al eliminar la Película/Serie', 'error');
+                showAlert('Hubo un problema al eliminar la Película/Serie', 'error');
             }
           });
         
     }
 
     const AddMovie = async () => {
+        
         const { value: formValues } = await Swal.fire({
             title: 'Ingrese datos a cargar:',
             html:
@@ -152,11 +152,11 @@ const BoardMovieSerie = () => {
             try {
                 const docRef = await addDoc(collection(db, "peliculas"), formValues);
                 console.log("Document written with ID: ", docRef.id);
-                Swal.fire('Éxito', 'Película/Serie agregada con éxito', 'success');
+                showAlert('Película/Serie agregada con éxito', 'success');
+
                 fetchMovies();
             } catch (e) {
-                console.error("Error adding document: ", e);
-                Swal.fire('Error', 'Hubo un problema al agregar la Película/Serie', 'error');
+                showAlert('Hubo un problema al agregar la Película/Serie', 'error');
             }
         }
     };

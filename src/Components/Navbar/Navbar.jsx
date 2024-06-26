@@ -15,10 +15,9 @@ function NavBarPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
-  
 
   useEffect(() => {
-    setHomeRoute(location.pathname === "/home");
+    setHomeRoute(location.pathname === "/home" || location.pathname === "/" );
     setVideoPlayerRoute(location.pathname === "/moviePlayer");
     setAdminRoute(location.pathname === "/admin");
     setFavoritesRoute(location.pathname === "/favorites");
@@ -35,7 +34,6 @@ function NavBarPage() {
       navigate('/home'); // Redirigir a la página de inicio de sesión
 
       await signOut(auth);
-      console.log("Logout exitoso");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       setIsAuthenticated(false);
@@ -57,7 +55,7 @@ function NavBarPage() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home" className="me-auto">
+        <Navbar.Brand className="me-auto">
           <Link to='/home' style={{ textDecoration: 'None', color: 'black' }}>ArgFlix</Link>
         </Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
@@ -65,13 +63,13 @@ function NavBarPage() {
           <>
             {
               user &&<Nav>
-              <Nav.Link onClick={()=> navigate("/favorites")}>Mis Favoritos</Nav.Link>
+              <Nav.Link onClick={()=> navigate("/favorites")} style={{marginRight:"15px"}}>Mis Favoritos</Nav.Link>
             </Nav>
             }
             
             {user?.role === "superAdmin" &&           
             <Nav>
-              <Nav.Link onClick={() => navigate("/superAdmin")}>superAdmin</Nav.Link>
+              <Nav.Link onClick={() => navigate("/superAdmin")} style={{marginRight:"15px"}}>superAdmin</Nav.Link>
             </Nav>
             }
             {user?.role === "admin" &&           
@@ -88,9 +86,9 @@ function NavBarPage() {
           </>
         )}
         <Nav>
-          {videoPlayerRoute === true && (<Nav.Link href="#home">Mis Favoritos</Nav.Link>)}
+          {videoPlayerRoute === true && (<Nav.Link >Mis Favoritos</Nav.Link>)}
           {isAuthenticated ? (
-            <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
+            <Nav.Link onClick={handleLogout}  style={{marginLeft:"15px"}}>Cerrar sesión</Nav.Link>
           ) : (
             <Nav.Link href="/signin">Inicio sesión</Nav.Link>
           )}

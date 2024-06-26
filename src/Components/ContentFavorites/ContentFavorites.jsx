@@ -12,6 +12,7 @@ const ContentFavorites = () => {
   const { user, deleteFavorites } = useUser();
   const { movies } = useContext(MoviesContext);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (user && user.favorites) {
@@ -53,7 +54,7 @@ const ContentFavorites = () => {
                   <Card.Body>
                     <Card.Title style={{marginTop:"10px"}}>{movie.nombre}</Card.Title>
                     <Card.Subtitle style={{marginTop:"10px"}}>{movie.genero}</Card.Subtitle>
-                    <Card.Subtitle style={{marginTop:"10px"}}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+                    <Card.Subtitle style={{ marginTop: "10px" }}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
                     <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)} style={{marginTop:"10px"}}>
                       Reproducir                    </Button>
                     <Button

@@ -7,6 +7,7 @@ import News from "../News/News";
 import Trends from "../Trends/Trends";
 import Swal from "sweetalert2";
 
+
 function ContentHome() {
   const { movies } = useContext(MoviesContext);
   const { user } = useUser();
@@ -16,6 +17,7 @@ function ContentHome() {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +54,8 @@ function ContentHome() {
     setFilteredMovies(filtered);
   }, [searchMovies, selectedGenre, movies]);
 
+
+  
   const handleSearchInputChange = (e) => {
     setSearchMovies(e.target.value);
   };
@@ -67,6 +71,8 @@ function ContentHome() {
       navigate(`/moviePlayer/${randomMovie.id}`);
     }
   };
+
+  
 
   return (
     <div>

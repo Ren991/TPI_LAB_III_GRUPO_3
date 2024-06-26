@@ -18,14 +18,12 @@ export const UserProvider = ({ children }) => {
     if (storedUser && token) {
       setUser(JSON.parse(storedUser));
     }
-    console.log("User loaded from localStorage:", user);
   }, []);
 
   const signIn = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('token', userData.token);
-    console.log("User signed in:", userData);
   };
 
   const signOut = () => {
@@ -33,7 +31,6 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem("userRol");
-    console.log("User signed out");
   };
 
   const addFavorites = async (movieId) => {
@@ -45,11 +42,9 @@ export const UserProvider = ({ children }) => {
       };
       setUser(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      console.log(user)
       try {
         const userDoc = doc(db, 'users', user.id);
         await updateDoc(userDoc, { favorites: updatedFavorites });
-        console.log("Favorites updated successfully in Firestore");
       } catch (error) {
         console.error("Error adding favorite: ", error);
       }
@@ -69,7 +64,6 @@ export const UserProvider = ({ children }) => {
       try {
         const userDoc = doc(db, 'users', user.id);
         await updateDoc(userDoc, { favorites: updatedFavorites });
-        console.log("Favorites updated successfully in Firestore");
       } catch (error) {
         console.error("Error deleting favorite: ", error);
       }

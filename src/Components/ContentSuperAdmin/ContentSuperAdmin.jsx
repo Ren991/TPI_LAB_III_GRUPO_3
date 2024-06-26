@@ -6,9 +6,12 @@ import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { doc, setDoc, getFirestore, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../../Services/firebase';
 import { useNavigate } from "react-router-dom";
+import useSwalAlert from '../../hooks/useSwalAlert';
+
 
 const ContentSuperAdmin = () => {
     const [admins, setAdmins] = useState([]);
+    const { showAlert } = useSwalAlert();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,7 +26,7 @@ const ContentSuperAdmin = () => {
             const adminList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setAdmins(adminList);
         } catch (error) {
-            console.error("Error fetching admin users:", error);
+            showAlert("Error al cargar admins", "error")
         }
     };
 
@@ -48,9 +51,7 @@ const ContentSuperAdmin = () => {
                 
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, input1, input3);
-                    console.log(userCredential);
                     const user = userCredential.user;
-                    console.log(user);
                     const userDocRef = doc(db, 'users', user.uid);
                     await setDoc(userDocRef, {
                         email: input1,
@@ -59,21 +60,13 @@ const ContentSuperAdmin = () => {
                         favorites: [] 
                     });
         
-                    console.log('User signed up and role set:', user);
-                    navigate(("/signin"));
-                } catch (error) {
-                    console.error('Error signing up:', error);
+                    showAlert('Admin con éxito', 'success'); 
+                    navigate(("/home"));
+                } catch (error) {                   
                     
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Error al registrar un admin, intentente nuevamente.',
-                        icon: 'error',
-                        confirmButtonText: 'Salir'
-                    })
-                }
-    
+                    showAlert('Hubo un problema al registrar admin', 'error');
+                }   
                 
-                console.log('Valores ingresados:', input1, input2);
             }
     
     
@@ -118,10 +111,10 @@ const ContentSuperAdmin = () => {
                 await deleteUserFromAuth(uid);
                 await deleteUserFromFirestore(uid);
                 fetchAdminUsers(); // Actualizar la lista de admins después de eliminar uno
-                Swal.fire('Eliminado!', 'El admin ha sido eliminado.', 'success');
-            } catch (error) {
-                console.error('Error in user deletion process:', error);
-                Swal.fire('Error', 'Hubo un problema al eliminar el admin.', 'error');
+                showAlert('El admin ha sido eliminado.', 'success');
+                
+            } catch (error) {                
+                showAlert('Hubo un problema al eliminar admin', 'error');
             }
         }
     };
@@ -138,9 +131,8 @@ const ContentSuperAdmin = () => {
         try {
             const userDocRef = doc(db, 'users', uid);
             await deleteDoc(userDocRef);
-            console.log('Successfully deleted user document with uid: ${uid}');
         } catch (error) {
-            console.error('Error deleting user from Firestore:', error);
+            showAlert('Hubo un problema al eliminar admin', 'error');
         }
     };
 
