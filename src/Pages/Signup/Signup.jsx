@@ -3,10 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import Swal from 'sweetalert2'
 import { db } from '../../Services/firebase';
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../Components/AuthContext/AuthContext"
+import useSwalAlert from '../../hooks/useSwalAlert';
+
 
 
 function SignUp() {
@@ -17,6 +18,8 @@ function SignUp() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { user } = useUser();
+    const { showAlert } = useSwalAlert();  //Hook personalizado
+
 
 
     useEffect(() => {
@@ -33,9 +36,7 @@ function SignUp() {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(userCredential);
             const user = userCredential.user;
-            console.log(user);
             const userDocRef = doc(db, 'users', user.uid);
             await setDoc(userDocRef, {
                 email: user.email,
@@ -44,22 +45,15 @@ function SignUp() {
                 favorites: [] //para guardar los favoritos.
             });
 
-            console.log('User signed up and role set:', user);
+            showAlert('Usuario Registrado con éxito!', 'success');
             navigate(("/signin"));
         } catch (error) {
-            console.error('Error signing up:', error);
-            setError(error.message);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Error al registrarse, intentente nuevamente.',
-                icon: 'error',
-                confirmButtonText: 'Salir'
-            })
+            showAlert('Error al registrarse, intentelo nuevamente.', 'error');
+
         }
 
         if (password !== repeatPassword) {
-            setError('Las contraseñas no coinciden');
-
+            showAlert('Las contraseñas no coinciden.', 'error');
             return;
         }
 
@@ -120,7 +114,7 @@ function SignUp() {
                 </Button>
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
                     <h4>Ya tienes cuenta</h4>
-                    <Button>Iniciar Sesión</Button>
+                    <Button onClick={()=>navigate("/signin")}>Iniciar Sesión</Button>
                 </div>
             </Form>
 

@@ -9,16 +9,13 @@ import Swal from "sweetalert2";
 
 function MoviePlayer() {
   const { user } = useUser();
-  console.log(user)
   const navigate = useNavigate();
   
   useEffect(() => {
-    console.log(user);
     if (!user) {
       Swal.fire('Error', 'Debe iniciar sesión para reproducir la pelicula/serie', 'error');
       navigate("/home")
     }
-    console.log(user);
   }, [user]);  
 
   return (

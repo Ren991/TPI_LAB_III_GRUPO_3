@@ -1,38 +1,35 @@
-import News from "../News/News"
-import Trends from "../Trends/Trends"
-import Image from 'react-bootstrap/Image';
 import React, { useContext, useState, useEffect } from 'react';
-import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card } from "react-bootstrap";
-import Swal from "sweetalert2";
-
+import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card, Spinner } from "react-bootstrap";
+import { useUser } from "../../Components/AuthContext/AuthContext";
 import { MoviesContext } from "../MovieContext/MovieContext";
 import { useNavigate } from "react-router-dom";
-
+import News from "../News/News";
+import Trends from "../Trends/Trends";
+import Swal from "sweetalert2";
 
 
 function ContentHome() {
   const { movies } = useContext(MoviesContext);
-
+  const { user } = useUser();
   const [trends, setTrends] = useState([]);
   const [news, setNews] = useState([]);
   const [searchMovies, setSearchMovies] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (movies.length > 0) {
-
       const topRatedMovies = [...movies].sort((a, b) => b.rating - a.rating).slice(0, 4);
       setTrends(topRatedMovies);
-
-
       const recentMovies = [...movies].sort((a, b) => b.anioLanzamiento - a.anioLanzamiento).slice(0, 4);
       setNews(recentMovies);
+      setLoading(false);
     }
   }, [movies]);
-  
+
   useEffect(() => {
     let filtered = movies;
 
@@ -43,28 +40,25 @@ function ContentHome() {
     }
 
     if (selectedGenre !== "") {
-      if(selectedGenre !== "Película" && selectedGenre !== "Serie")
-      filtered = filtered.filter(movie =>
-        movie.genero && movie.genero.toLowerCase() === selectedGenre.toLowerCase()
-      )
-      else if(selectedGenre === "Película" || selectedGenre === "Serie"){
-        console.log(selectedGenre);
+      if (selectedGenre !== "Película" && selectedGenre !== "Serie") {
+        filtered = filtered.filter(movie =>
+          movie.genero && movie.genero.toLowerCase() === selectedGenre.toLowerCase()
+        );
+      } else if (selectedGenre === "Película" || selectedGenre === "Serie") {
         filtered = filtered.filter(movie =>
           movie.tipo && movie.tipo.toLowerCase() === selectedGenre.toLowerCase()
-        )
-
+        );
       }
     }
 
     setFilteredMovies(filtered);
   }, [searchMovies, selectedGenre, movies]);
-  
-  
+
+
   
   const handleSearchInputChange = (e) => {
     setSearchMovies(e.target.value);
   };
-
 
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
@@ -78,6 +72,8 @@ function ContentHome() {
     }
   };
 
+  
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -86,8 +82,7 @@ function ContentHome() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="#home" onClick={randomMovie}>Que ver?</Nav.Link>
-
-              <NavDropdown title="Generos" id="basic-nav-dropdown">
+              <NavDropdown title="Géneros" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={() => handleGenreSelect("")}>Volver</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => handleGenreSelect("Drama")}>Drama</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => handleGenreSelect("Fantasía")}>Fantasía</NavDropdown.Item>
@@ -114,14 +109,29 @@ function ContentHome() {
         </Container>
       </Navbar>
       
-      {searchMovies.trim() === ""  && selectedGenre === "" ? (
+      {searchMovies.trim() === "" && selectedGenre === "" ? (
         <>
           <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/11/greatest-movies-of-all-time.jpg" style={{ width: "100%", height: "480px" }} />
-          <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+          <div style={{ width: "40%", marginLeft: "auto", marginRight: "auto" }}>
             <h2>Tendencias</h2>
-            <Trends trends={trends} />
-            <h2>Novedades</h2>
-            <News news={news} />
+            {loading ? (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            ) : (
+              <Trends trends={trends} user={user} />
+            )}
+            
+          </div>
+          <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+          <h2>Novedades</h2>
+            {loading ? (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            ) : (
+              <News news={news} user={user} />
+            )}
           </div>
         </>
       ) : (
@@ -129,19 +139,18 @@ function ContentHome() {
           {filteredMovies.length > 0 ? (
             <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
               <h2>Resultados de búsqueda</h2>
-              <div style={{display:"flex", justifyContent:"space-around",flexWrap:"wrap"}}>
-              {filteredMovies.map((movie, index) => (
-                <Card key={index} style={{ width: '18rem', marginTop:"12px" }}>
-                    <Card.Img variant="top" src={movie.urlImagen} />
+              <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
+                {filteredMovies.map((movie, index) => (
+                  <Card key={index} style={{ width: '18rem', marginTop: "12px" }}>
+                    <Card.Img variant="top" src={movie.urlImagen || "/images/notfoundimg.png"} style={{ objectFit: 'cover', width: '100%', height: '15rem' }} />
                     <Card.Body>
-                        <Card.Title>{movie.nombre}</Card.Title>
-                        <Card.Subtitle>{movie.anioLanzamiento}</Card.Subtitle>
-                        <Card.Subtitle>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
-
-                        <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
+                      <Card.Title style={{ marginTop: "10px" }}>{movie.nombre}</Card.Title>
+                      <Card.Subtitle style={{ marginTop: "10px" }}>{movie.anioLanzamiento}</Card.Subtitle>
+                      <Card.Subtitle style={{ marginTop: "10px" }}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+                      <Button style={{ marginTop: "15px" }} variant="primary" disabled={!user} onClick={() => navigate(`/moviePlayer/${movie.id}`)}>Reproducir</Button>
                     </Card.Body>
-                </Card>
-            ))}
+                  </Card>
+                ))}
               </div>
             </div>
           ) : (
@@ -155,11 +164,4 @@ function ContentHome() {
   );
 }
 
-      
-
-  
-
-  
-
-
-export default ContentHome
+export default ContentHome;

@@ -4,12 +4,15 @@ import { useUser } from "../../Components/AuthContext/AuthContext";
 import { MoviesContext } from "../MovieContext/MovieContext";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
+
 
 const ContentFavorites = () => {
   const [favoritesMovies, setFavoritesMovies] = useState([]);
   const { user, deleteFavorites } = useUser();
   const { movies } = useContext(MoviesContext);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (user && user.favorites) {
@@ -42,15 +45,18 @@ const ContentFavorites = () => {
           <Row>
             {favoritesMovies.map((movie, index) => (
               <Col key={index} sm={4} md={4} lg={4} className="mb-4">
-                <Card style={{ width: "15rem",cursor:"pointer" }} onClick={() => navigate(`/moviePlayer/${movie.id}`)}>
+                <Card style={{ width: "15rem",cursor:"pointer" }} >
                   <Card.Img
                     variant="top"
                     src={`${movie.urlImagen}`}
+                    style={{ objectFit: 'cover', width: '100%', height: '15rem' }}
                   />
                   <Card.Body>
                     <Card.Title style={{marginTop:"10px"}}>{movie.nombre}</Card.Title>
                     <Card.Subtitle style={{marginTop:"10px"}}>{movie.genero}</Card.Subtitle>
-                    <Card.Subtitle style={{marginTop:"10px"}}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+                    <Card.Subtitle style={{ marginTop: "10px" }}>{movie.rating && '⭐'.repeat(movie.rating)}</Card.Subtitle>
+                    <Button variant="primary" onClick={() => navigate(`/moviePlayer/${movie.id}`)} style={{marginTop:"10px"}}>
+                      Reproducir                    </Button>
                     <Button
                     style={{marginTop:"10px"}}
                       variant="danger"
@@ -64,9 +70,9 @@ const ContentFavorites = () => {
             ))}
           </Row>
         ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Alert key="danger" variant="danger">
+            No hay películas o series agregadas a favoritos.
+        </Alert>
         )}
       </Container>
     </div>

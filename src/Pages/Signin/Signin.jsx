@@ -10,16 +10,18 @@ import { useNavigate } from "react-router-dom";
 // import { AuthContext } from '../../Components/AuthContext/AuthContext';
 import { useContext } from 'react';
 import { useUser } from "../../Components/AuthContext/AuthContext"
+import useSwalAlert from '../../hooks/useSwalAlert';
 
 
 
 function SignIn() {
-    // const { setIsSignedIn, setUserRol } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { signIn } = useUser();
     const { user } = useUser();   
+    const { showAlert } = useSwalAlert();  //Hook personalizado
+
     useEffect(() => {
         if (user !== null) {
          navigate("/home")
@@ -42,30 +44,18 @@ function SignIn() {
                 const userData = userDoc.data();
                 const token = await user.getIdToken();
                 localStorage.setItem('user', JSON.stringify(user));
-                console.log(userData);
                 localStorage.setItem('token', token);
                 localStorage.setItem('userRol', userData.role);
                 const dataUser = {id:user.uid, email: mail, token: token, role: userData.role , favorites: userData.favorites };
-                //setIsSignedIn(true);
-                //setUserRol(userData.role);  
+                
                 signIn(dataUser);
 
                 navigate("/home")
             } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Credenciales Inválidas',
-                    icon: 'error',
-                    confirmButtonText: 'Salir'
-                })
+                showAlert('Credenciales inválidas', 'error');
             }
         } catch (err) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Credenciales Inválidas',
-                icon: 'error',
-                confirmButtonText: 'Salir'
-            })
+            showAlert('Credenciales inválidas', 'error');
         }
     }
 

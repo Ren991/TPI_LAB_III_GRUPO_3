@@ -13,11 +13,9 @@ const SuperAdmin = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    console.log(user);
     if (user && user.role && user.role !== "superAdmin" || user === null) {
      navigate("/home")
     }
-    console.log(user);
   }, [user]);   
 
   return (

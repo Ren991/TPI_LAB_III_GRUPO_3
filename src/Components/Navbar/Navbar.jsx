@@ -15,10 +15,9 @@ function NavBarPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
-  
 
   useEffect(() => {
-    setHomeRoute(location.pathname === "/home");
+    setHomeRoute(location.pathname === "/home" || location.pathname === "/" );
     setVideoPlayerRoute(location.pathname === "/moviePlayer");
     setAdminRoute(location.pathname === "/admin");
     setFavoritesRoute(location.pathname === "/favorites");
@@ -32,37 +31,45 @@ function NavBarPage() {
   const handleLogout = async () => {
     const auth = getAuth();
     try {
+      navigate('/home'); // Redirigir a la página de inicio de sesión
+
       await signOut(auth);
-      console.log("Logout exitoso");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       setIsAuthenticated(false);
       signOut();
-      navigate('/home'); // Redirigir a la página de inicio de sesión
     } catch (error) {
       console.error("Error cerrando sesión:", error);
     }
   };
 
-
+  const getUserEmail = () => {
+    if (user) {
+      const namePart = user.name ? user.name.split('')[0] : user.email.split('@')[0];
+      return namePart.charAt(0).toUpperCase() + namePart.slice(1);
+    }
+    return '';
+  };
 
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home" className="me-auto">
+        <Navbar.Brand className="me-auto">
           <Link to='/home' style={{ textDecoration: 'None', color: 'black' }}>ArgFlix</Link>
         </Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
         {homeRoute === true && (
           <>
-  
-            <Nav>
-              <Nav.Link onClick={()=> navigate("/favorites")}>Mis Favoritos</Nav.Link>
+            {
+              user &&<Nav>
+              <Nav.Link onClick={()=> navigate("/favorites")} style={{marginRight:"15px"}}>Mis Favoritos</Nav.Link>
             </Nav>
+            }
+            
             {user?.role === "superAdmin" &&           
             <Nav>
-              <Nav.Link onClick={() => navigate("/superAdmin")}>superAdmin</Nav.Link>
+              <Nav.Link onClick={() => navigate("/superAdmin")} style={{marginRight:"15px"}}>superAdmin</Nav.Link>
             </Nav>
             }
             {user?.role === "admin" &&           
@@ -70,13 +77,18 @@ function NavBarPage() {
               <Nav.Link onClick={() => navigate("/admin")} >Admin</Nav.Link>
             </Nav>
             }
+            {user && user.role !== "superAdmin" && user.role !== "admin" && (
+              <Nav>
+                <Nav.Link>{getUserEmail()}</Nav.Link>
+              </Nav>
+            )}
             
           </>
         )}
         <Nav>
-          {videoPlayerRoute === true && (<Nav.Link href="#home">Mis Favoritos</Nav.Link>)}
+          {videoPlayerRoute === true && (<Nav.Link >Mis Favoritos</Nav.Link>)}
           {isAuthenticated ? (
-            <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
+            <Nav.Link onClick={handleLogout}  style={{marginLeft:"15px"}}>Cerrar sesión</Nav.Link>
           ) : (
             <Nav.Link href="/signin">Inicio sesión</Nav.Link>
           )}

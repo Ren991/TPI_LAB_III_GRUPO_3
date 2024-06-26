@@ -4,11 +4,14 @@ import { useUser } from "../../Components/AuthContext/AuthContext";
 import { useContext, useState, useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Container, Form, FormControl, Button, Card, Row, Col } from "react-bootstrap";
 import Spinner from 'react-bootstrap/Spinner';
+import useSwalAlert from '../../hooks/useSwalAlert';
+
 
 function VideoPlayer() {
   const { id } = useParams();
   const { movies } = useContext(MoviesContext);
   const { user, addFavorites, deleteFavorites } = useUser(); 
+  const { showAlert } = useSwalAlert();  //Hook personalizado
 
   const movie = movies.find(movie => movie.id === id);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
@@ -41,8 +44,12 @@ function VideoPlayer() {
   const handleFavoriteClick = () => {
     if (isFavorite) {
       deleteFavorites(movie.id);
+      showAlert('Se eliminó de favoritos.!', 'success');
     } else {
       addFavorites(movie.id);
+      showAlert('Se agregó a favoritos.!', 'success');
+
+
     }
     setIsFavorite(!isFavorite);
   };

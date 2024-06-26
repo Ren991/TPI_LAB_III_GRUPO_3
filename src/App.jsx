@@ -10,28 +10,18 @@ import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
 import Admin from "./Pages/Admin/Admin";
 import { UserProvider } from "./Components/AuthContext/AuthContext";
 import { MoviesProvider } from "./Components/MovieContext/MovieContext";
+import NotFound from "./Pages/NotFound/NotFound";
 
 
 function App() {
 
 
-  /*useEffect(() => {
-
-    const storedRol = localStorage.getItem('userRol');
-    console.log(storedRol)
-    if (storedRol) {
-
-      setUserRol(storedRol);
-
-    } else {
-      setUserRol('')
-    };
-
-    console.log(userRol)
-
-  }, []);*/
 
   const router = createBrowserRouter([
+    {
+      path:"/",
+      element: <Home />,
+    },
     {
       path: "/home",
       element: <Home />,
@@ -65,6 +55,10 @@ function App() {
     {
       path: "/admin",
       element: <Admin />,
+    },
+    {
+      path: "*", // Ruta para manejar páginas no encontradas
+      element: <NotFound />,
     },
 
 
