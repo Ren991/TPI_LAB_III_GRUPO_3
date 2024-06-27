@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.js
+import Home from "./Pages/Home/Home";
+import SignIn from "./Pages/Signin/Signin";
+import MoviePlayer from "./Pages/MoviePlayer/MoviePlayer";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SignUp from "./Pages/Signup/Signup";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Favorites from "./Pages/Favorites/Favorites";
+import SuperAdmin from "./Pages/SuperAdmin/SuperAdmin";
+import Admin from "./Pages/Admin/Admin";
+import { UserProvider } from "./Components/AuthContext/AuthContext";
+import { MoviesProvider } from "./Components/MovieContext/MovieContext";
+import NotFound from "./Pages/NotFound/NotFound";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+
+  const router = createBrowserRouter([
+    {
+      path:"/",
+      element: <Home />,
+    },
+    {
+      path: "/home",
+      element: <Home />,
+    },
+    {
+      path: "/signIn",
+      element: <SignIn />,
+    },
+    {
+      path: "/signUp",
+      element: <SignUp />,
+    },
+    {
+      path: "/moviePlayer/:id",
+      element:
+
+          <MoviePlayer />
+
+    },
+    {
+      path: "/favorites",
+      element: 
+
+        <Favorites />
+
+    },
+    {
+      path: "/superadmin",
+      element: <SuperAdmin />,
+    },
+    {
+      path: "/admin",
+      element: <Admin />,
+    },
+    {
+      path: "*", // Ruta para manejar páginas no encontradas
+      element: <NotFound />,
+    },
+
+
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <UserProvider>
+      <MoviesProvider>
+        <RouterProvider router={router} />
+      </MoviesProvider>
+    </UserProvider>
+  );
 }
 
-export default App
+export default App;
