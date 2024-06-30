@@ -2,15 +2,16 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { db } from '../../Services/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 
-// Crear el contexto
+
 const UserContext = createContext();
 
-// Hook personalizado para usar el contexto
+
 export const useUser = () => useContext(UserContext);
 
-// Proveedor del contexto
+
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -18,6 +19,7 @@ export const UserProvider = ({ children }) => {
     if (storedUser && token) {
       setUser(JSON.parse(storedUser));
     }
+    
   }, []);
 
   const signIn = (userData) => {

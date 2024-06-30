@@ -31,7 +31,7 @@ function NavBarPage() {
   const handleLogout = async () => {
     const auth = getAuth();
     try {
-      navigate('/home'); // Redirigir a la página de inicio de sesión
+      navigate('/home'); 
 
       await signOut(auth);
       localStorage.removeItem('user');
@@ -58,7 +58,7 @@ function NavBarPage() {
         <Navbar.Brand className="me-auto">
           <Link to='/home' style={{ textDecoration: 'None', color: 'black' }}>ArgFlix</Link>
         </Navbar.Brand>
-        {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+       
         {homeRoute === true && (
           <>
             {

@@ -26,6 +26,7 @@ const ContentFavorites = () => {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">cargando...</span>
+       
       </Spinner>
     );
   }

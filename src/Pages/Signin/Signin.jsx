@@ -20,7 +20,7 @@ function SignIn() {
     const navigate = useNavigate();
     const { signIn } = useUser();
     const { user } = useUser();   
-    const { showAlert } = useSwalAlert();  //Hook personalizado
+    const { showAlert } = useSwalAlert();  
 
     useEffect(() => {
         if (user !== null) {

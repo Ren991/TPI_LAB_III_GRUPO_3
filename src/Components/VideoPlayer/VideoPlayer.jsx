@@ -11,7 +11,7 @@ function VideoPlayer() {
   const { id } = useParams();
   const { movies } = useContext(MoviesContext);
   const { user, addFavorites, deleteFavorites } = useUser(); 
-  const { showAlert } = useSwalAlert();  //Hook personalizado
+  const { showAlert } = useSwalAlert();  
 
   const movie = movies.find(movie => movie.id === id);
   const [recommendedMovies, setRecommendedMovies] = useState([]);

@@ -1,30 +1,37 @@
 import NavBarPage from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import VideoPlayer from "../../Components/VideoPlayer/VideoPlayer";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useUser } from "../../Components/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
 import Swal from "sweetalert2";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 function MoviePlayer() {
   const { user } = useUser();
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (!user) {
-      Swal.fire('Error', 'Debe iniciar sesión para reproducir la pelicula/serie', 'error');
-      navigate("/home")
+  const [loading, setLoading] = useState(true);
+
+  console.log(user);
+
+  useScrollToTop();
+   useEffect(() => {
+    if (user !== "null") {
+      setLoading(false);
+
     }
-  }, [user]);  
+
+  }, [user]); 
+ 
 
   return (
     <div>
-        <NavBarPage/>
-        <VideoPlayer/>    
-        <Footer/>      
+      <NavBarPage />
+      <VideoPlayer />
+      <Footer />
     </div>
-    
+
   )
 }
 

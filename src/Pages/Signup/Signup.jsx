@@ -18,7 +18,7 @@ function SignUp() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { user } = useUser();
-    const { showAlert } = useSwalAlert();  //Hook personalizado
+    const { showAlert } = useSwalAlert();  
 
 
 
@@ -42,7 +42,7 @@ function SignUp() {
                 email: user.email,
                 role: 'commonUser',
                 username: username,
-                favorites: [] //para guardar los favoritos.
+                favorites: [] 
             });
 
             showAlert('Usuario Registrado con éxito!', 'success');

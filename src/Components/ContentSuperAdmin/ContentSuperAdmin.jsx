@@ -110,7 +110,7 @@ const ContentSuperAdmin = () => {
             try {
                 await deleteUserFromAuth(uid);
                 await deleteUserFromFirestore(uid);
-                fetchAdminUsers(); // Actualizar la lista de admins después de eliminar uno
+                fetchAdminUsers(); 
                 showAlert('El admin ha sido eliminado.', 'success');
                 
             } catch (error) {                
@@ -121,7 +121,7 @@ const ContentSuperAdmin = () => {
 
     const deleteUserFromAuth = async (uid) => {
         try {
-           // verificar permisos para eliminar del servicio de autenticación
+          
         } catch (error) {
             console.error('Error deleting user from auth:', error);
         }
