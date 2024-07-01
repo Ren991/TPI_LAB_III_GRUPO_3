@@ -62,7 +62,7 @@ function SignUp() {
 
     return (
         <div style={{
-            width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "50px", backgroundColor: "#818fdb", paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+            width: "40%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", backgroundColor: "#818fdb", paddingTop: "15px", paddingBottom: "15px", borderRadius: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
             WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
             MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'
         }}>
@@ -74,37 +74,37 @@ function SignUp() {
                     <Form.Label>Usuario</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Usuario"
+                        placeholder="Ingrese nombre de usuario"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>Dirección de email</Form.Label>
                     <Form.Control
                         type="email"
-                        placeholder="Enter email"
+                        placeholder="Ingrese su email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Contraseña</Form.Label>
                     <Form.Control
                         type="password"
-                        placeholder="Password"
+                        placeholder="Ingrese contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicRepeatPassword">
-                    <Form.Label>Repeat Password</Form.Label>
+                    <Form.Label>Repetir contraseña</Form.Label>
                     <Form.Control
                         type="password"
-                        placeholder="Repeat Password"
+                        placeholder="Repetir contraseña"
                         value={repeatPassword}
                         onChange={(e) => setRepeatPassword(e.target.value)}
                     />
@@ -112,9 +112,12 @@ function SignUp() {
                 <Button variant="primary" type="submit">
                     Crear cuenta
                 </Button>
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
-                    <h4>Ya tienes cuenta</h4>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px" }}>
+                    <h4>¿Ya tienes cuenta? ➡</h4>
                     <Button onClick={()=>navigate("/signin")}>Iniciar Sesión</Button>
+                </div>
+                <div style={{ marginTop: "10px" }}>
+                    <Button variant="primary" onClick={() => navigate("/home")}>Volver a Home</Button>
                 </div>
             </Form>
 

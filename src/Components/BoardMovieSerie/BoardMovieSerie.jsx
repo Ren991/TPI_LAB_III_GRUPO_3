@@ -75,26 +75,30 @@ const BoardMovieSerie = () => {
     };
 
     const deleteMovie = async(movie)=>{
-        Swal.fire({
-            title: "Estas seguro?",            
+        const result = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: `Estás a punto de eliminar la película ${movie.nombre}.`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, Eliminar!"
-          }).then(async () => {
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Sí, Eliminar"
+        });
+    
+        if (result.isConfirmed) {
             try {
                 const userDoc = doc(db, 'peliculas', movie.id);
-                await deleteDoc(userDoc, movie.nombre );                    
+                await deleteDoc(userDoc);
                 showAlert('Película/Serie eliminada con éxito', 'success');
                 fetchMovies();
-                
             } catch (e) {
                 showAlert('Hubo un problema al eliminar la Película/Serie', 'error');
             }
-          });
-        
-    }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+           
+        }
+    };
 
     const AddMovie = async () => {
         

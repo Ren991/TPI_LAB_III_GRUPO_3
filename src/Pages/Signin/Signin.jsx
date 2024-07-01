@@ -61,7 +61,7 @@ function SignIn() {
 
     return (
         <div style={{
-            width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", backgroundColor: "#818fdb", paddingTop: "15px", paddingBottom: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+            width: "40%", marginLeft: "auto", marginRight: "auto", marginTop: "25px", backgroundColor: "#818fdb", paddingTop: "15px", paddingBottom: "15px", borderRadius: "15px", boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
             WebkitBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
             MozBoxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'
         }}>
@@ -69,21 +69,24 @@ function SignIn() {
             <Form style={{ width: "60%", marginLeft: "auto", marginRight: "auto" }} onSubmit={handleSubmit}>
                 <h3>Iniciar sesión:</h3>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
+                    <Form.Label>Dirección de email</Form.Label>
+                    <Form.Control type="email" placeholder="Ingrese su email" onChange={(e) => setEmail(e.target.value)} />
 
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control type="password" placeholder="Ingrese contraseña" onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                    Submit
+                    Ingresar
                 </Button>
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
-                    <h4>No tienes cuenta?</h4>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px" }}>
+                    <h4>¿No tienes cuenta? ➡</h4>
                     <Button onClick={() => navigate("/signup")}>Crear Cuenta</Button>
+                </div>
+                <div style={{ marginTop: "10px" }}>
+                    <Button variant="primary" onClick={() => navigate("/home")}>Volver a Home</Button>
                 </div>
             </Form>
         </div>

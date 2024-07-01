@@ -44,10 +44,10 @@ function VideoPlayer() {
   const handleFavoriteClick = () => {
     if (isFavorite) {
       deleteFavorites(movie.id);
-      showAlert('Se eliminó de favoritos.!', 'success');
+      showAlert('Se eliminó de favoritos!', 'success');
     } else {
       addFavorites(movie.id);
-      showAlert('Se agregó a favoritos.!', 'success');
+      showAlert('Se agregó a favoritos!', 'success');
 
 
     }
@@ -84,7 +84,7 @@ function VideoPlayer() {
             {recommendedMovies.map((recommendedMovie, index) => (
               <Col key={index} sm={4} md={4} lg={4} className="mb-4">
                 <Card style={{ width: "15rem" }}>
-                  <Card.Img variant="top" src={recommendedMovie.urlImagen} />
+                  <Card.Img variant="top" src={recommendedMovie.urlImagen} style={{ objectFit: 'cover', width: '100%', height: '15rem' }}/>
                   <Card.Body>
                     <Card.Title>{recommendedMovie.nombre}</Card.Title>
                     <Button variant="primary" onClick={() => navigate(`/moviePlayer/${recommendedMovie.id}`)}>Ver</Button>
