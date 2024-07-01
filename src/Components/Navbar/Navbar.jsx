@@ -55,7 +55,7 @@ function NavBarPage() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand className="me-auto">
+        <Navbar.Brand className="me-auto" onClick={()=> navigate("/home")}>
           <Link to='/home' style={{ textDecoration: 'None', color: 'black' }}>ArgFlix</Link>
         </Navbar.Brand>
        

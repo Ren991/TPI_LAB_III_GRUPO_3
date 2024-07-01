@@ -72,6 +72,16 @@ function ContentHome() {
     }
   };
 
+  const deleteFilters=()=>{
+    if(selectedGenre){
+      handleGenreSelect("") ;
+
+    }
+    if(searchMovies){
+      setSearchMovies("");
+
+    }
+  }
   
 
   return (
@@ -95,6 +105,7 @@ function ContentHome() {
                 <NavDropdown.Item onClick={() => handleGenreSelect("Película")}>Películas</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => handleGenreSelect("Serie")}>Series</NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link href="#home" onClick={deleteFilters}>Borrar filtros</Nav.Link>
               <Form className="d-flex me-auto">
                 <FormControl
                   type="search"
@@ -102,6 +113,7 @@ function ContentHome() {
                   className="me-2"
                   aria-label="Search"
                   onChange={handleSearchInputChange}
+                  value={searchMovies}
                 />
               </Form>
             </Nav>
