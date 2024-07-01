@@ -113,7 +113,7 @@ function SignUp() {
                     Crear cuenta
                 </Button>
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", }}>
-                    <h4>Ya tienes cuenta</h4>
+                    <h4>Ya tienes cuenta? </h4>
                     <Button onClick={()=>navigate("/signin")}>Iniciar Sesión</Button>
                 </div>
             </Form>
