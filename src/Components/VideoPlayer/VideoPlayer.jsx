@@ -29,7 +29,7 @@ function VideoPlayer() {
 
   useEffect(() => {
     if (user && movie) {
-      setIsFavorite(user.favorites.includes(movie.id));
+      setIsFavorite(user?.favorites.includes(movie.id));
     }
   }, [user, movie]);
 

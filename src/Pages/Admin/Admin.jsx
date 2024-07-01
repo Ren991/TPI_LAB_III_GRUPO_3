@@ -18,7 +18,7 @@ const Admin = () => {
     checkUser();
   }, []);
 
-  useEffect(() => {
+   useEffect(() => {
     if (!loading) {
       if (!user || (user.role && user.role !== "admin")) {       
         navigate("/home");
@@ -28,7 +28,7 @@ const Admin = () => {
 
   if (loading) {
     return <div>Cargando...</div>; 
-  }
+  } 
 
   return (
     <div style={{ width: '100%' }}>
