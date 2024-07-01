@@ -24,20 +24,20 @@ const BoardMovieSerie = () => {
         Swal.fire({
             title: 'Editar datos:',
             html:
-                `<label>Nombre:</label>
-                <input id="input1" class="swal2-input" placeholder="Nombre" value="${movie.nombre}">` +                
-                `<label>Genero:</label>
-                <input id="input2" class="swal2-input" placeholder="Género" value="${movie.genero}">` +
-                `<label>Rating:</label>
-                <input id="input3" class="swal2-input" placeholder="Rating" value="${movie.rating}">` +
-                `<label>Video:</label>
-                <input id="input4" class="swal2-input" placeholder="Url Video" value="${movie.urlVideo}">` +
-                `<label>Imagen:</label>
-                <input id="input5" class="swal2-input" placeholder="Url Imagen" value="${movie.urlImagen}">` +
-                `<label>Tipo:</label>
-                <input id="input6" class="swal2-input" placeholder="Peli/Serie" value="${movie.tipo}">` +
-                `<label>Fecha:</label>
-                <input id="input7" class="swal2-input" placeholder="Año lanzamiento" value="${movie.anioLanzamiento}">`,
+                `<label style="display: inline-block; width: 80px;">Nombre:</label>
+                <input id="input1" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Nombre" value="${movie.nombre}">` +                
+                `<label style="display: inline-block; width: 80px;">Genero:</label>
+                <input id="input2" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Género" value="${movie.genero}">` +
+                `<label style="display: inline-block; width: 80px;">Rating:</label>
+                <input id="input3" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Rating" value="${movie.rating}">` +
+                `<label style="display: inline-block; width: 80px;">Video:</label>
+                <input id="input4" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Url Video" value="${movie.urlVideo}">` +
+                `<label style="display: inline-block; width: 80px;">Imagen:</label>
+                <input id="input5" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Url Imagen" value="${movie.urlImagen}">` +
+                `<label style="display: inline-block; width: 80px;">Tipo:</label>
+                <input id="input6" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Peli/Serie" value="${movie.tipo}">` +
+                `<label style="display: inline-block; width: 80px;">Fecha:</label>
+                <input id="input7" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Año lanzamiento" value="${movie.anioLanzamiento}">`,
             showCancelButton: true,
             confirmButtonText: 'Editar',
             cancelButtonText: 'Cancelar',
