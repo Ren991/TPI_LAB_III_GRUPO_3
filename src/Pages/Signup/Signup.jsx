@@ -117,7 +117,7 @@ function SignUp() {
                     <Button onClick={()=>navigate("/signin")}>Iniciar Sesión</Button>
                 </div>
                 <div style={{ marginTop: "10px" }}>
-                    <Button variant="primary" onClick={() => navigate("/home")}>Volver a Home</Button>
+                    <Button variant="primary" onClick={() => navigate("/home")}>Volver al inicio</Button>
                 </div>
             </Form>
 
