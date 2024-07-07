@@ -24,20 +24,20 @@ const BoardMovieSerie = () => {
         Swal.fire({
             title: 'Editar datos:',
             html:
-                `<label>Nombre:</label>
-                <input id="input1" class="swal2-input" placeholder="Nombre" value="${movie.nombre}">` +                
-                `<label>Genero:</label>
-                <input id="input2" class="swal2-input" placeholder="Género" value="${movie.genero}">` +
-                `<label>Rating:</label>
-                <input id="input3" class="swal2-input" placeholder="Rating" value="${movie.rating}">` +
-                `<label>Video:</label>
-                <input id="input4" class="swal2-input" placeholder="Url Video" value="${movie.urlVideo}">` +
-                `<label>Imagen:</label>
-                <input id="input5" class="swal2-input" placeholder="Url Imagen" value="${movie.urlImagen}">` +
-                `<label>Tipo:</label>
-                <input id="input6" class="swal2-input" placeholder="Peli/Serie" value="${movie.tipo}">` +
-                `<label>Fecha:</label>
-                <input id="input7" class="swal2-input" placeholder="Año lanzamiento" value="${movie.anioLanzamiento}">`,
+                `<label style="display: inline-block; width: 80px;">Nombre:</label>
+                <input id="input1" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Nombre" value="${movie.nombre}">` +                
+                `<label style="display: inline-block; width: 80px;">Genero:</label>
+                <input id="input2" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Género" value="${movie.genero}">` +
+                `<label style="display: inline-block; width: 80px;">Rating:</label>
+                <input id="input3" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Rating" value="${movie.rating}">` +
+                `<label style="display: inline-block; width: 80px;">Video:</label>
+                <input id="input4" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Url Video" value="${movie.urlVideo}">` +
+                `<label style="display: inline-block; width: 80px;">Imagen:</label>
+                <input id="input5" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Url Imagen" value="${movie.urlImagen}">` +
+                `<label style="display: inline-block; width: 80px;">Tipo:</label>
+                <input id="input6" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Peli/Serie" value="${movie.tipo}">` +
+                `<label style="display: inline-block; width: 80px;">Fecha:</label>
+                <input id="input7" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Año lanzamiento" value="${movie.anioLanzamiento}">`,
             showCancelButton: true,
             confirmButtonText: 'Editar',
             cancelButtonText: 'Cancelar',
@@ -75,26 +75,30 @@ const BoardMovieSerie = () => {
     };
 
     const deleteMovie = async(movie)=>{
-        Swal.fire({
-            title: "Estas seguro?",            
+        const result = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: `Estás a punto de eliminar la película ${movie.nombre}.`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, Eliminar!"
-          }).then(async () => {
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Sí, Eliminar"
+        });
+    
+        if (result.isConfirmed) {
             try {
                 const userDoc = doc(db, 'peliculas', movie.id);
-                await deleteDoc(userDoc, movie.nombre );                    
+                await deleteDoc(userDoc);
                 showAlert('Película/Serie eliminada con éxito', 'success');
                 fetchMovies();
-                
             } catch (e) {
                 showAlert('Hubo un problema al eliminar la Película/Serie', 'error');
             }
-          });
-        
-    }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+           
+        }
+    };
 
     const AddMovie = async () => {
         

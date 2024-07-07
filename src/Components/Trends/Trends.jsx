@@ -12,14 +12,14 @@ const navigate = useNavigate();
             {trends && trends.map((movie) => (
                     <Carousel.Item key={movie.id} style={{cursor: user ? "pointer" : "default"}} onClick={()=> user && navigate(`/moviePlayer/${movie.id}`)}>
                         <img
-                            style={{height:590,objectFit:"fit"}}
+                            style={{height:650,objectFit:"fit"}}
                             className="d-block w-100"
                             src={movie.urlImagen || 'https://via.placeholder.com/800x400'}
                             alt={`Image of ${movie.nombre}`}
                         />
                         <Carousel.Caption>
-                            <h3 style={{color: "white"}}>{movie.nombre}</h3>
-                            <p style={{fontSize:"25px",backgroundColor:"black",borderRadius:"0.5rem"}}>{movie.genero || '-'}</p>
+                            <h3 style={{color: "white", textShadow: "1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue"}}>{movie.nombre}</h3>
+                            <p style={{fontSize: "20px", color: "white", textShadow: "1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue"}}>{movie.genero || '-'}</p>
                         </Carousel.Caption>
                     </Carousel.Item>
                 ))}
