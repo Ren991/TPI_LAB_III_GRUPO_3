@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import Swal from 'sweetalert2';
 import { db } from '../../Services/firebase';
-import { collection, getDocs,doc,updateDoc, deleteDoc,addDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, deleteDoc, addDoc, where, query  } from "firebase/firestore";
 import { MoviesContext } from "../MovieContext/MovieContext";
 import useSwalAlert from '../../hooks/useSwalAlert';
 
@@ -18,14 +18,14 @@ const BoardMovieSerie = () => {
         return match && match[2].length === 11 ? `https://www.youtube.com/embed/${match[2]}` : null;
     };
 
-    
+
 
     const editMovie = (movie) => {
         Swal.fire({
             title: 'Editar datos:',
             html:
                 `<label style="display: inline-block; width: 80px;">Nombre:</label>
-                <input id="input1" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Nombre" value="${movie.nombre}">` +                
+                <input id="input1" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Nombre" value="${movie.nombre}">` +
                 `<label style="display: inline-block; width: 80px;">Genero:</label>
                 <input id="input2" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 100px);" placeholder="Género" value="${movie.genero}">` +
                 `<label style="display: inline-block; width: 80px;">Rating:</label>
@@ -54,17 +54,17 @@ const BoardMovieSerie = () => {
 
                 const nuevosValores = {
                     anioLanzamiento: input7,
-                    genero:input2,
-                    nombre:input1,
-                    rating:input3,
-                    tipo:input6,
-                    urlImagen:input5,
+                    genero: input2,
+                    nombre: input1,
+                    rating: input3,
+                    tipo: input6,
+                    urlImagen: input5,
                     urlVideo: videoUrl
                 }
                 try {
                     const userDoc = doc(db, 'peliculas', movie.id);
-                    await updateDoc(userDoc, nuevosValores );                    
-                    showAlert('Película/Serie editada con éxito', 'success'); 
+                    await updateDoc(userDoc, nuevosValores);
+                    showAlert('Película/Serie editada con éxito', 'success');
                     fetchMovies();
                 } catch (e) {
                     showAlert('Hubo un problema al editar la Película/Serie', 'error');
@@ -74,7 +74,7 @@ const BoardMovieSerie = () => {
         });
     };
 
-    const deleteMovie = async(movie)=>{
+    const deleteMovie = async (movie) => {
         const result = await Swal.fire({
             title: "¿Estás seguro?",
             text: `Estás a punto de eliminar la película ${movie.nombre}.`,
@@ -85,7 +85,7 @@ const BoardMovieSerie = () => {
             cancelButtonText: "Cancelar",
             confirmButtonText: "Sí, Eliminar"
         });
-    
+
         if (result.isConfirmed) {
             try {
                 const userDoc = doc(db, 'peliculas', movie.id);
@@ -96,12 +96,12 @@ const BoardMovieSerie = () => {
                 showAlert('Hubo un problema al eliminar la Película/Serie', 'error');
             }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-           
+
         }
     };
 
     const AddMovie = async () => {
-        
+
         const { value: formValues } = await Swal.fire({
             title: 'Ingrese datos a cargar:',
             html:
@@ -116,7 +116,7 @@ const BoardMovieSerie = () => {
                 '<option value="Ciencia ficción">Ciencia ficción</option>' +
                 '<option value="Misterio">Misterio</option>' +
                 '</select>' +
-                '<input id="input3" class="swal2-input" placeholder="Rating" style="margin: 10px 0; display: inline-block; width: calc(100% - 20px);">' +
+                '<input id="input3" type="number" min="1" max="5" class="swal2-input" placeholder="Rating" style="margin: 10px 0; display: inline-block; width: calc(100% - 20px);">' +
                 '<input id="input4" class="swal2-input" placeholder="Url Video" style="margin: 10px 0; display: inline-block; width: calc(100% - 20px);">' +
                 '<input id="input5" class="swal2-input" placeholder="Url Imagen" style="margin: 10px 0; display: inline-block; width: calc(100% - 20px);">' +
                 '<select id="input6" class="swal2-input" style="margin: 10px 0; display: inline-block; width: calc(100% - 20px);">' +
@@ -129,7 +129,7 @@ const BoardMovieSerie = () => {
             confirmButtonText: 'Agregar',
             cancelButtonText: 'Cancelar',
             preConfirm: () => {
-                
+
                 const input1 = document.getElementById('input1').value;
                 const input2 = document.getElementById('input2').value;
                 const input3 = document.getElementById('input3').value;
@@ -138,6 +138,15 @@ const BoardMovieSerie = () => {
                 const input6 = document.getElementById('input6').value;
                 const input7 = document.getElementById('input7').value;
 
+                if (!input1 || !input2 || !input3 || !input4 || !input5 || !input6 || !input7) {
+                    Swal.showValidationMessage('Por favor complete todos los campos');
+                    return false;
+                }
+                if ( input3 > 5 || input3 <= 0 ){
+                    Swal.showValidationMessage('Rating tiene que ser cualquier valor entre 1 y 5');
+                    return false;
+                }
+                
                 const videoUrl = getYouTubeEmbedUrl(input4);
 
                 return {
@@ -153,7 +162,14 @@ const BoardMovieSerie = () => {
         });
 
         if (formValues) {
+
+
             try {
+                let querySnapshot = await getDocs(query(collection(db, "peliculas"), where("nombre", "==", formValues.nombre)));
+                if (!querySnapshot.empty) {
+                    showAlert('La Pelicula/Serie que quieres agregar ya existe', 'error');
+                    return;
+                }
                 const docRef = await addDoc(collection(db, "peliculas"), formValues);
                 console.log("Document written with ID: ", docRef.id);
                 showAlert('Película/Serie agregada con éxito', 'success');
@@ -168,7 +184,7 @@ const BoardMovieSerie = () => {
 
     return (
         <div style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: "15px" }}>
-            <div style={{ display: 'flex', justifyContent: 'space-around',marginBottom:"15px" }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: "15px" }}>
                 <Button onClick={AddMovie}>Agregar Película / Serie</Button>
             </div>
             <Container>
@@ -176,11 +192,11 @@ const BoardMovieSerie = () => {
                     {movies.map((movie, index) => (
                         <Col key={index} sm={4} md={4} lg={4} className="mb-4">
                             <Card style={{ width: "15rem" }}>
-                                <Card.Img variant="top" src={movie.urlImagen} style={{ objectFit: 'cover', width: '100%', height: '15rem' }}/>
+                                <Card.Img variant="top" src={movie.urlImagen} style={{ objectFit: 'cover', width: '100%', height: '15rem' }} />
                                 <Card.Body>
                                     <Card.Title>{movie.nombre}</Card.Title>
                                     <Button variant="primary" onClick={() => editMovie(movie)}>Editar</Button>
-                                    <Button variant="secondary" onClick={()=> deleteMovie(movie)}>Eliminar</Button>
+                                    <Button variant="secondary" onClick={() => deleteMovie(movie)}>Eliminar</Button>
                                 </Card.Body>
                             </Card>
                         </Col>

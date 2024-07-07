@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 const useSwalAlert = () => {
   const [alertState, setAlertState] = useState({
     text: '',
-    type: 'success', // default to success
+    type: 'success', 
   });
 
   const showAlert = (text, type = 'success') => {
